@@ -1,1 +1,19 @@
-https://github.com/intrig-unicamp/mininet-wifi
+لخطوة 2 — تثبيت Mininet-WiFi
+
+باستخدام الأوامر التالية في Ubuntu:
+
+sudo apt update
+sudo apt install git
+git clone https://github.com/intrig-unicamp/mininet-wifi
+cd mininet-wifi
+sudo util/install.sh -Wlnfv
+
+الخطوة 3 — تثبيت SDN Controller (مثلاً Ryu)
+sudo apt install python3-pip
+pip3 install ryu
+
+الخطوة 4 — إنشاء Topology في Mininet-WiFi
+
+مثال بسيط (AP1 و AP2 + Hostين):
+
+sudo mn --wifi --topo simplewifi
