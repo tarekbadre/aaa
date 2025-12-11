@@ -1,3 +1,5 @@
+ما الخطوه التاليه
+اريد اكمال المشروع الان
 اشرح بالعربي 
 Skip to content
 Chat history
@@ -490,4 +492,5 @@ Python
 
 No file chosenNo file chosen
 ChatGPT can make mistakes. Check important info.
+
 
