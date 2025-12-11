@@ -1,4 +1,13 @@
 sudo python3 sdn_project.py
+mohaned@mohaned:~$ nano sdn_project.py
+mohaned@mohaned:~$ sudo python3 sdn_project.py
+[sudo] password for mohaned: 
+Traceback (most recent call last):
+  File "/home/mohaned/sdn_project.py", line 5, in <module>
+    from mininet.wifi.net import Mininet_wifi
+ModuleNotFoundError: No module named 'mininet.wifi'
+mohaned@mohaned:~$ 
+
 
 nano rssi_controller.py
 
