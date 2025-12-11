@@ -1,0 +1,43 @@
+#!/usr/bin/python3
+
+from mininet.node import Controller, OVSKernelSwitch
+from mininet.log import setLogLevel
+from mininet.wifi.net import Mininet_wifi
+from mininet.wifi.node import UserAP
+
+def topology():
+
+    net = Mininet_wifi(controller=Controller, switch=OVSKernelSwitch, accessPoint=UserAP)
+
+    print("*** Creating nodes")
+    sta1 = net.addStation('sta1', position='10,20,0')
+    sta2 = net.addStation('sta2', position='50,20,0')
+
+    ap1 = net.addAccessPoint('ap1', ssid="wifi-1", mode="g", channel="1", position='20,20,0')
+    ap2 = net.addAccessPoint('ap2', ssid="wifi-2", mode="g", channel="6", position='60,20,0')
+
+    c1 = net.addController('c1', controller=Controller)
+
+    print("*** Configuring WiFi nodes")
+    net.configureWifiNodes()
+
+    print("*** Starting network")
+    net.build()
+    c1.start()
+    ap1.start([c1])
+    ap2.start([c1])
+
+    print("*** Running CLI")
+    net.plotGraph(max_x=100, max_y=100)
+    net.startMobility(time=0)
+
+    # الحركة (اختياري)
+    sta1.setPosition('10,20,0')
+    sta2.setPosition('50,20,0')
+
+    net.stopMobility()
+    net.stop()
+
+if __name__ == '__main__':
+    setLogLevel('info')
+    topology()
