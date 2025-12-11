@@ -1,1 +1,20 @@
+mn --wifi
+الحل 100% (إعادة تثبيت Mininet-WiFi بالطريقة الصحيحة)
+1. ثبّت المتطلبات
 
+نفّذ:
+
+sudo apt update
+sudo apt install -y git python3-pip python3-setuptools python3-scapy \
+    pkg-config libnl-3-dev libnl-genl-3-dev libssl-dev
+2. حمّل Mininet-WiFi من GitHub
+git clone https://github.com/intrig-unicamp/mininet-wifi.git
+cd mininet-wifi
+sudo util/install.sh -Wlnfv
+4. تأكّد أنه يعمل
+sudo mn --wifi
+✅ بعد التثبيت: جرّب كود المشروع
+
+افتح الملف:
+
+nano sdn_project.py
