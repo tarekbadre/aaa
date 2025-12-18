@@ -7,3 +7,10 @@ sudo apt install -y ryu-manager
 
 
 
+mohaned@mohaned:~$ sudo apt install -y ryu-manager
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package ryu-manager
+mohaned@mohaned:~$ 
+
