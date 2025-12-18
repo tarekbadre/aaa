@@ -4,122 +4,40 @@ mohaned@mohaned:~$ sudo python3 sdn_project.py
 sudo apt install -y ryu-manager
 
 ---------------------------------------------
-mohaned@mohaned:~$ python3.10 --version
-Python 3.10.19
-mohaned@mohaned:~$ python3.10 -m venv ryu-env
-mohaned@mohaned:~$ source ryu-env/bin/activate
-(ryu-env) mohaned@mohaned:~$ pip install --upgrade pip setuptools wheel
-Requirement already satisfied: pip in ./ryu-env/lib/python3.10/site-packages (25.3)
-Requirement already satisfied: setuptools in ./ryu-env/lib/python3.10/site-packages (79.0.1)
-Collecting setuptools
-  Using cached setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)
-Requirement already satisfied: wheel in ./ryu-env/lib/python3.10/site-packages (0.45.1)
-Using cached setuptools-80.9.0-py3-none-any.whl (1.2 MB)
-Installing collected packages: setuptools
-  Attempting uninstall: setuptools
-    Found existing installation: setuptools 79.0.1
-    Uninstalling setuptools-79.0.1:
-      Successfully uninstalled setuptools-79.0.1
-Successfully installed setuptools-80.9.0
-(ryu-env) mohaned@mohaned:~$ pip install ryu
-Collecting ryu
-  Using cached ryu-4.34.tar.gz (1.1 MB)
-  Installing build dependencies ... done
-  Getting requirements to build wheel ... error
-  error: subprocess-exited-with-error
-  
-  × Getting requirements to build wheel did not run successfully.
-  │ exit code: 1
-  ╰─> [21 lines of output]
-      Traceback (most recent call last):
-        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 389, in <module>
-          main()
-        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 373, in main
-          json_out["return_val"] = hook(**hook_input["kwargs"])
-        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 143, in get_requires_for_build_wheel
-          return hook(config_settings)
-        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 331, in get_requires_for_build_wheel
-          return self._get_build_requires(config_settings, requirements=[])
-        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 301, in _get_build_requires
-          self.run_setup()
-        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 512, in run_setup
-          super().run_setup(setup_script=setup_script)
-        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 317, in run_setup
-          exec(code, locals())
-        File "<string>", line 27, in <module>
-        File "/tmp/pip-install-rvb9r4ce/ryu_3803c00871da4dafba476fe7cbe942b8/ryu/hooks.py", line 36, in save_orig
-          _main_module()._orig_get_script_args = easy_install.get_script_args
-        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/command/easy_install.py", line 15, in __getattr__
-          attr = getattr(
-      AttributeError: 'types.SimpleNamespace' object has no attribute 'get_script_args'
-      [end of output]
-  
-  note: This error originates from a subprocess, and is likely not a problem with pip.
-ERROR: Failed to build 'ryu' when getting requirements to build wheel
-(ryu-env) mohaned@mohaned:~$ ryu-manager --version
-ryu-manager: command not found
-(ryu-env) mohaned@mohaned:~$ (ryu-env)
-ryu-env: command not found
-(ryu-env) mohaned@mohaned:~$ pip uninstall -y setuptools
-Found existing installation: setuptools 80.9.0
-Uninstalling setuptools-80.9.0:
-  Successfully uninstalled setuptools-80.9.0
-(ryu-env) mohaned@mohaned:~$ pip install setuptools==65.5.1
-Collecting setuptools==65.5.1
-  Downloading setuptools-65.5.1-py3-none-any.whl.metadata (6.3 kB)
-Downloading setuptools-65.5.1-py3-none-any.whl (1.2 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 6.0 MB/s  0:00:00
-Installing collected packages: setuptools
-Successfully installed setuptools-65.5.1
-(ryu-env) mohaned@mohaned:~$ python - <<EOF
-import setuptools
-print(setuptools.__version__)
-EOF
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-ModuleNotFoundError: No module named 'setuptools'
-(ryu-env) mohaned@mohaned:~$ pip install ryu --no-build-isolation
-Collecting ryu
-  Using cached ryu-4.34.tar.gz (1.1 MB)
-  Preparing metadata (pyproject.toml) ... error
-  error: subprocess-exited-with-error
-  
-  × Preparing metadata (pyproject.toml) did not run successfully.
-  │ exit code: 1
-  ╰─> [22 lines of output]
-      /home/mohaned/ryu-env/lib/python3.10/site-packages/setuptools/_distutils/dist.py:264: UserWarning: Unknown distribution option: 'pbr'
-        warnings.warn(msg)
-      /home/mohaned/ryu-env/lib/python3.10/site-packages/setuptools/dist.py:771: UserWarning: Usage of dash-separated 'author-email' will not be supported in future versions. Please use the underscore name 'author_email' instead
-        warnings.warn(
-      /home/mohaned/ryu-env/lib/python3.10/site-packages/setuptools/dist.py:771: UserWarning: Usage of dash-separated 'home-page' will not be supported in future versions. Please use the underscore name 'home_page' instead
-        warnings.warn(
-      /home/mohaned/ryu-env/lib/python3.10/site-packages/setuptools/dist.py:771: UserWarning: Usage of dash-separated 'description-file' will not be supported in future versions. Please use the underscore name 'description_file' instead
-        warnings.warn(
-      error: Multiple top-level packages discovered in a flat-layout: ['ryu', 'etc'].
-      
-      To avoid accidental inclusion of unwanted files or directories,
-      setuptools will not proceed with this build.
-      
-      If you are trying to create a single distribution with multiple packages
-      on purpose, you should not rely on automatic discovery.
-      Instead, consider the following options:
-      
-      1. set up custom discovery (`find` directive with `include` or `exclude`)
-      2. use a `src-layout`
-      3. explicitly set `py_modules` or `packages` with a list of names
-      
-      To find more information, look for "package discovery" on setuptools docs.
-      [end of output]
-  
-  note: This error originates from a subprocess, and is likely not a problem with pip.
-error: metadata-generation-failed
+نفّذ الحل التالي حرفيًا (لا تغيّر شيئًا)
+1️⃣ احذف البيئة الحالية (للتنظيف فقط)
+deactivate
+rm -rf ~/ryu-env
 
-× Encountered error while generating package metadata.
-╰─> ryu
+2️⃣ أنشئ بيئة جديدة بـ Python 3.10
+python3.10 -m venv ~/ryu-env
+source ~/ryu-env/bin/activate
 
-note: This is an issue with the package mentioned above, not pip.
-hint: See above for details.
-(ryu-env) mohaned@mohaned:~$ ryu-manager --version
-ryu-manager: command not found
-(ryu-env) mohaned@mohaned:~$ 
 
+تأكد:
+
+python --version
+# Python 3.10.x
+
+3️⃣ ثبّت أدوات متوافقة (إصدارات قديمة متعمدة)
+pip install pip==23.2.1
+pip install setuptools==59.6.0 wheel
+pip install pbr==5.11.1
+
+
+⚠️ نعم، هذه الإصدارات قديمة عمداً
+✔ لكنها متوافقة مع Ryu
+
+4️⃣ ثبّت Ryu من GitHub (الطريقة الصحيحة)
+pip install git+https://github.com/faucetsdn/ryu.git --no-use-pep517
+
+
+⏳ انتظر… سيأخذ دقيقة
+
+5️⃣ التحقق (اللحظة الحاسمة)
+ryu-manager --version
+
+
+أو:
+
+which ryu-manager
