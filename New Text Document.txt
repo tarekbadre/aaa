@@ -1,37 +1,7 @@
-mohaned@mohaned:~$ ls
-Desktop              mn4146_ap1-wlan1.apconf  rssi_controller.py  Templates
-Documents            Music                    ryu                 To
-Downloads            myenv                    ryu-env             Videos
-mac80211_hwsim_mgmt  openflow                 ryu-venv            wmediumd
-mininet              Pictures                 sdn_project.py
-mininet-wifi         Public                   snap
-mohaned@mohaned:~$ sudo python3 -c "from mn_wifi.net import Mininet_wifi; print('OK')"
-[sudo] password for mohaned: 
-OK
-mohaned@mohaned:~$ nano adaptive_power.py
-mohaned@mohaned:~$ sudo python3 adaptive_power.py
-*** Creating nodes
-*** Connecting to wmediumd server /var/run/wmediumd.sock
-*** Starting network
-*** Monitoring RSSI & adjusting Tx Power
-Traceback (most recent call last):
-  File "/home/mohaned/adaptive_power.py", line 63, in <module>
-    topology()
-  File "/home/mohaned/adaptive_power.py", line 47, in topology
-    rssi = sta1.params['rssi']
-           ~~~~~~~~~~~^^^^^^^^
-KeyError: 'rssi'
-mohaned@mohaned:~$ nano sdn_project.py
-mohaned@mohaned:~$ sudo python3 sdn_project.py
-*** Creating nodes
-*** Connecting to wmediumd server /var/run/wmediumd.sock
-*** Starting network
-*** Monitoring RSSI & adapting Tx Power
-Traceback (most recent call last):
-  File "/home/mohaned/sdn_project.py", line 63, in <module>
-    topology()
-  File "/home/mohaned/sdn_project.py", line 47, in topology
-    rssi = sta1.params['rssi']
-           ~~~~~~~~~~~^^^^^^^^
-KeyError: 'rssi'
-mohaned@mohaned:~$ 
+nano sdn_project.py
+--------------------------
+rssi = sta1.params['rssi']
+
+rssi = sta1.wintfs[0].rssi
+-----------------------------
+sudo python3 sdn_project.py
