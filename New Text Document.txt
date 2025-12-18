@@ -1,138 +1,37 @@
-adaptive_power.py
-----------------------
-#!/usr/bin/python3
-
-from mn_wifi.net import Mininet_wifi
-from mn_wifi.node import OVSKernelAP
-from mn_wifi.cli import CLI
-from mn_wifi.link import wmediumd
-from mn_wifi.wmediumdConnector import interference
-
-from mininet.log import setLogLevel, info
-import time
-
-def topology():
-
-    net = Mininet_wifi(
-        controller=None,
-        accessPoint=OVSKernelAP,
-        link=wmediumd,
-        wmediumd_mode=interference
-    )
-
-    info("*** Creating nodes\n")
-
-    sta1 = net.addStation(
-        'sta1',
-        position='10,10,0'
-    )
-
-    ap1 = net.addAccessPoint(
-        'ap1',
-        ssid='sdn-wifi',
-        mode='g',
-        channel='1',
-        position='50,50,0',
-        txpower=14
-    )
-
-    net.configureWifiNodes()
-
-    info("*** Starting network\n")
-    net.build()
-    ap1.start([])
-
-    info("*** Monitoring RSSI & adjusting Tx Power\n")
-
-    for i in range(10):
-
-        rssi = sta1.params['rssi']
-        tx = ap1.params['txpower']
-
-        info(f"Iteration {i} | RSSI = {rssi} dBm | TxPower = {tx}\n")
-
-        if rssi < -70:
-            info("⚠ Weak signal → Increasing Tx Power\n")
-            ap1.setTxPower(tx + 2)
-
-        time.sleep(2)
-
-    CLI(net)
-    net.stop()
-
-if __name__ == '__main__':
-    setLogLevel('info')
+mohaned@mohaned:~$ ls
+Desktop              mn4146_ap1-wlan1.apconf  rssi_controller.py  Templates
+Documents            Music                    ryu                 To
+Downloads            myenv                    ryu-env             Videos
+mac80211_hwsim_mgmt  openflow                 ryu-venv            wmediumd
+mininet              Pictures                 sdn_project.py
+mininet-wifi         Public                   snap
+mohaned@mohaned:~$ sudo python3 -c "from mn_wifi.net import Mininet_wifi; print('OK')"
+[sudo] password for mohaned: 
+OK
+mohaned@mohaned:~$ nano adaptive_power.py
+mohaned@mohaned:~$ sudo python3 adaptive_power.py
+*** Creating nodes
+*** Connecting to wmediumd server /var/run/wmediumd.sock
+*** Starting network
+*** Monitoring RSSI & adjusting Tx Power
+Traceback (most recent call last):
+  File "/home/mohaned/adaptive_power.py", line 63, in <module>
     topology()
---------------------------------------
-sudo python3 adaptive_power.py
-
--------------
-sdn_project.py
------------
-#!/usr/bin/python3
-
-from mn_wifi.net import Mininet_wifi
-from mn_wifi.node import OVSKernelAP
-from mn_wifi.cli import CLI
-from mn_wifi.link import wmediumd
-from mn_wifi.wmediumdConnector import interference
-
-from mininet.log import setLogLevel, info
-import time
-
-def topology():
-
-    net = Mininet_wifi(
-        controller=None,
-        accessPoint=OVSKernelAP,
-        link=wmediumd,
-        wmediumd_mode=interference
-    )
-
-    info("*** Creating nodes\n")
-
-    sta1 = net.addStation(
-        'sta1',
-        position='5,5,0'
-    )
-
-    ap1 = net.addAccessPoint(
-        'ap1',
-        ssid='SDN-WiFi',
-        mode='g',
-        channel='1',
-        position='50,50,0',
-        txpower=14
-    )
-
-    net.configureWifiNodes()
-
-    info("*** Starting network\n")
-    net.build()
-    ap1.start([])
-
-    info("*** Monitoring RSSI & adapting Tx Power\n")
-
-    for i in range(10):
-
-        rssi = sta1.params['rssi']
-        tx = ap1.params['txpower']
-
-        info(f"[{i}] RSSI={rssi} dBm | TxPower={tx}\n")
-
-        if rssi < -70:
-            info("⚠ Weak signal detected → Increasing Tx Power\n")
-            ap1.setTxPower(tx + 3)
-
-        time.sleep(2)
-
-    CLI(net)
-    net.stop()
-
-if __name__ == '__main__':
-    setLogLevel('info')
+  File "/home/mohaned/adaptive_power.py", line 47, in topology
+    rssi = sta1.params['rssi']
+           ~~~~~~~~~~~^^^^^^^^
+KeyError: 'rssi'
+mohaned@mohaned:~$ nano sdn_project.py
+mohaned@mohaned:~$ sudo python3 sdn_project.py
+*** Creating nodes
+*** Connecting to wmediumd server /var/run/wmediumd.sock
+*** Starting network
+*** Monitoring RSSI & adapting Tx Power
+Traceback (most recent call last):
+  File "/home/mohaned/sdn_project.py", line 63, in <module>
     topology()
-----------------------------
-sudo python3 sdn_project.py
-
---------
+  File "/home/mohaned/sdn_project.py", line 47, in topology
+    rssi = sta1.params['rssi']
+           ~~~~~~~~~~~^^^^^^^^
+KeyError: 'rssi'
+mohaned@mohaned:~$ 
