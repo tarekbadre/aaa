@@ -1,80 +1,26 @@
 mohaned@mohaned:~$ nano sdn_project.py
 mohaned@mohaned:~$ sudo python3 sdn_project.py
 ----------------------------------------------
-#!/usr/bin/python3
+mohaned@mohaned:~$ nano sdn_project.py
+mohaned@mohaned:~$ sudo python3 sdn_project.py
+*** Creating nodes
+*** Connecting to wmediumd server /var/run/wmediumd.sock
+*** Starting network
+*** Monitoring RSSI & adapting Tx Power
+[0] RSSI=-71.0 dBm | TxPower=14 dBm
+⚠ Weak signal → Increasing Tx Power
+[1] RSSI=-68.0 dBm | TxPower=17 dBm
+[2] RSSI=-68.0 dBm | TxPower=17 dBm
+[3] RSSI=-68.0 dBm | TxPower=17 dBm
+[4] RSSI=-68.0 dBm | TxPower=17 dBm
+[5] RSSI=-68.0 dBm | TxPower=17 dBm
+[6] RSSI=-68.0 dBm | TxPower=17 dBm
+[7] RSSI=-68.0 dBm | TxPower=17 dBm
+[8] RSSI=-68.0 dBm | TxPower=17 dBm
+[9] RSSI=-68.0 dBm | TxPower=17 dBm
+*** Starting CLI:
+mininet-wifi> 
 
-from mn_wifi.net import Mininet_wifi
-from mn_wifi.node import OVSKernelAP
-from mn_wifi.cli import CLI
-from mn_wifi.link import wmediumd
-from mn_wifi.wmediumdConnector import interference
-
-from mininet.log import setLogLevel, info
-import time
-
-
-def topology():
-
-    net = Mininet_wifi(
-        controller=None,
-        accessPoint=OVSKernelAP,
-        link=wmediumd,
-        wmediumd_mode=interference
-    )
-
-    info("*** Creating nodes\n")
-
-    sta1 = net.addStation(
-        'sta1',
-        position='60,60,0'
-    )
-
-    ap1 = net.addAccessPoint(
-        'ap1',
-        ssid='SDN-WiFi',
-        mode='g',
-        channel='1',
-        position='10,10,0',
-        txpower=14
-    )
-
-    net.configureWifiNodes()
-    net.setPropagationModel(model="logDistance", exp=3)
-
-    info("*** Starting network\n")
-    net.build()
-    ap1.start([])
-
-    time.sleep(3)
-
-    info("*** Monitoring RSSI & adapting Tx Power\n")
-
-    for i in range(10):
-
-        rssi = sta1.wintfs[0].rssi
-        tx = ap1.params['txpower']
-
-        if rssi == 0:
-            info(f"[{i}] ❌ Not associated | TxPower={tx}\n")
-            time.sleep(2)
-            continue
-
-        info(f"[{i}] RSSI={rssi:.1f} dBm | TxPower={tx} dBm\n")
-
-        if rssi <= -70:
-            info("⚠ Weak signal → Increasing Tx Power\n")
-            new_tx = tx + 3
-            ap1.setTxPower(new_tx)
-            ap1.params['txpower'] = new_tx
-
-        time.sleep(2)
-
-    CLI(net)
-    net.stop()
-
-
-if __name__ == '__main__':
-    setLogLevel('info')
-    topology()
 
 -------------------------------
+
