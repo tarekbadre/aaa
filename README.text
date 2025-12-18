@@ -1,21 +1,67 @@
-mn --wifi
-الحل 100% (إعادة تثبيت Mininet-WiFi بالطريقة الصحيحة)
-1. ثبّت المتطلبات
-
-نفّذ:
-
-sudo apt update
-sudo apt install -y git python3-pip python3-setuptools python3-scapy \
-    pkg-config libnl-3-dev libnl-genl-3-dev libssl-dev
-2. حمّل Mininet-WiFi من GitHub
-git clone https://github.com/intrig-unicamp/mininet-wifi.git
-cd mininet-wifi
-sudo util/install.sh -Wlnfv
-4. تأكّد أنه يعمل
-sudo mn --wifi
-✅ بعد التثبيت: جرّب كود المشروع
-
-افتح الملف:
-
-nano sdn_project.py
-mohaned.vbox
+y anyway? [n] n
+Skipping patch.
+10 out of 10 hunks ignored -- saving rejects to file hostapd/defconfig.rej
+patching file wpa_supplicant/defconfig
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] n
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file wpa_supplicant/defconfig.rej
+patching file wpa_supplicant/p2p_supplicant.c
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] n
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file wpa_supplicant/p2p_supplicant.c.rej
+mohaned@mohaned:~/mininet-wifi$ sudo python3 -c "from mininet.wifi.net import Mininet_wifi; print('OK')"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'mininet.wifi'
+mohaned@mohaned:~/mininet-wifi$ cp adaptive_power.py ~/mininet-wifi/
+cp: 'adaptive_power.py' and '/home/mohaned/mininet-wifi/adaptive_power.py' are the same file
+mohaned@mohaned:~/mininet-wifi$ nano adaptive_power.py
+mohaned@mohaned:~/mininet-wifi$ cd ~/mininet-wifi
+mohaned@mohaned:~/mininet-wifi$ sudo python3 adaptive_power.py
+Traceback (most recent call last):
+  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 77, in <module>
+    setLogLevel('info')
+    ^^^^^^^^^^^
+NameError: name 'setLogLevel' is not defined
+mohaned@mohaned:~/mininet-wifi$ nano adaptive_power.py
+mohaned@mohaned:~/mininet-wifi$ sudo python3 adaptive_power.py
+*** Creating nodes
+*** Configuring wifi nodes
+*** Starting network
+*** Monitoring RSSI & adjusting power
+Traceback (most recent call last):
+  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 60, in <module>
+    topology()
+  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 41, in topology
+    rssi = sta.get_rssi(ap1)
+           ^^^^^^^^^^^^
+AttributeError: 'Station' object has no attribute 'get_rssi'
+mohaned@mohaned:~/mininet-wifi$ nano adaptive_power.py
+mohaned@mohaned:~/mininet-wifi$ sudo python3 adaptive_power.py
+*** Creating nodes
+*** Configuring wifi nodes
+*** Starting network
+*** Monitoring RSSI & adjusting power
+Traceback (most recent call last):
+  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 65, in <module>
+    topology()
+  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 50, in topology
+    tx = sta.params['txpower'][0]
+         ~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'int' object is not subscriptable
+mohaned@mohaned:~/mininet-wifi$ nano adaptive_power.py~
+mohaned@mohaned:~/mininet-wifi$ sudo python3 adaptive_power.py
+*** Creating nodes
+*** Configuring wifi nodes
+*** Starting network
+*** Monitoring RSSI & adjusting power
+Traceback (most recent call last):
+  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 65, in <module>
+    topology()
+  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 50, in topology
+    tx = sta.params['txpower'][0]
+         ~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'int' object is not subscriptable
+mohaned@mohaned:~/mininet-wifi$ 
