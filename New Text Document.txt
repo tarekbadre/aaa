@@ -20,3 +20,19 @@ mininet-wifi
 اختبره:
 
 sudo python3 -c "from mn_wifi.net import Mininet_wifi; print('OK')"
+
+-----------------------------------------
+mohaned@mohaned:~$ ls
+Desktop              mn4146_ap1-wlan1.apconf  rssi_controller.py  Templates
+Documents            Music                    ryu                 To
+Downloads            myenv                    ryu-env             Videos
+mac80211_hwsim_mgmt  openflow                 ryu-venv            wmediumd
+mininet              Pictures                 sdn_project.py
+mininet-wifi         Public                   snap
+mohaned@mohaned:~$ 
+------------------------------------------
+mohaned@mohaned:~$ sudo python3 -c "from mn_wifi.net import Mininet_wifi; print('OK')"
+[sudo] password for mohaned: 
+OK
+mohaned@mohaned:~$ 
+
