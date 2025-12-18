@@ -1,26 +1,284 @@
 mohaned@mohaned:~$ nano sdn_project.py
 mohaned@mohaned:~$ sudo python3 sdn_project.py
 ----------------------------------------------
-mohaned@mohaned:~$ nano sdn_project.py
-mohaned@mohaned:~$ sudo python3 sdn_project.py
-*** Creating nodes
-*** Connecting to wmediumd server /var/run/wmediumd.sock
-*** Starting network
-*** Monitoring RSSI & adapting Tx Power
-[0] RSSI=-71.0 dBm | TxPower=14 dBm
-⚠ Weak signal → Increasing Tx Power
-[1] RSSI=-68.0 dBm | TxPower=17 dBm
-[2] RSSI=-68.0 dBm | TxPower=17 dBm
-[3] RSSI=-68.0 dBm | TxPower=17 dBm
-[4] RSSI=-68.0 dBm | TxPower=17 dBm
-[5] RSSI=-68.0 dBm | TxPower=17 dBm
-[6] RSSI=-68.0 dBm | TxPower=17 dBm
-[7] RSSI=-68.0 dBm | TxPower=17 dBm
-[8] RSSI=-68.0 dBm | TxPower=17 dBm
-[9] RSSI=-68.0 dBm | TxPower=17 dBm
+mohaned@mohaned:~$ sudo apt update
+[sudo] password for mohaned: 
+Hit:1 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:3 https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+26 packages can be upgraded. Run 'apt list --upgradable' to see them.
+mohaned@mohaned:~$ sudo apt upgrade -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+Get another security update through Ubuntu Pro with 'esm-apps' enabled:
+  python3-fonttools
+Learn more about Ubuntu Pro at https://ubuntu.com/pro
+The following upgrades have been deferred due to phasing:
+  gstreamer1.0-pipewire libmbim-glib4 libmbim-proxy libmbim-utils
+  libnss-systemd libpam-systemd libpipewire-0.3-0t64 libpipewire-0.3-common
+  libpipewire-0.3-modules libspa-0.2-bluetooth libspa-0.2-modules
+  libsystemd-shared libsystemd0 libudev1 pipewire pipewire-alsa pipewire-audio
+  pipewire-bin pipewire-pulse systemd systemd-dev systemd-oomd
+  systemd-resolved systemd-sysv systemd-timesyncd udev
+0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.
+mohaned@mohaned:~$ sudo apt install -y git python3 python3-pip net-tools \
+build-essential cmake libnl-3-dev libnl-genl-3-dev \
+iproute2 iw wireless-tools
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+python3 is already the newest version (3.12.3-0ubuntu2.1).
+python3 set to manually installed.
+python3-pip is already the newest version (24.0+dfsg-1ubuntu1.3).
+net-tools is already the newest version (2.10-0.1ubuntu4.4).
+build-essential is already the newest version (12.10ubuntu1).
+libnl-3-dev is already the newest version (3.7.0-0.3build1.1).
+libnl-genl-3-dev is already the newest version (3.7.0-0.3build1.1).
+iproute2 is already the newest version (6.1.0-1ubuntu6.2).
+iw is already the newest version (6.7-1build1).
+wireless-tools is already the newest version (30~pre9-16.1ubuntu2).
+The following additional packages will be installed:
+  cmake-data libjsoncpp25 librhash0
+Suggested packages:
+  cmake-doc cmake-format elpa-cmake-mode ninja-build
+The following NEW packages will be installed:
+  cmake cmake-data libjsoncpp25 librhash0
+0 upgraded, 4 newly installed, 0 to remove and 26 not upgraded.
+Need to get 13.6 MB of archives.
+After this operation, 49.1 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble/main amd64 libjsoncpp25 amd64 1.9.5-6build1 [82.8 kB]
+Get:2 http://archive.ubuntu.com/ubuntu noble/main amd64 librhash0 amd64 1.4.3-3build1 [129 kB]
+Get:3 http://archive.ubuntu.com/ubuntu noble/main amd64 cmake-data all 3.28.3-1build7 [2,155 kB]
+Get:4 http://archive.ubuntu.com/ubuntu noble/main amd64 cmake amd64 3.28.3-1build7 [11.2 MB]
+Fetched 13.6 MB in 2s (7,339 kB/s)    
+Selecting previously unselected package libjsoncpp25:amd64.
+(Reading database ... 178695 files and directories currently installed.)
+Preparing to unpack .../libjsoncpp25_1.9.5-6build1_amd64.deb ...
+Unpacking libjsoncpp25:amd64 (1.9.5-6build1) ...
+Selecting previously unselected package librhash0:amd64.
+Preparing to unpack .../librhash0_1.4.3-3build1_amd64.deb ...
+Unpacking librhash0:amd64 (1.4.3-3build1) ...
+Selecting previously unselected package cmake-data.
+Preparing to unpack .../cmake-data_3.28.3-1build7_all.deb ...
+Unpacking cmake-data (3.28.3-1build7) ...
+Selecting previously unselected package cmake.
+Preparing to unpack .../cmake_3.28.3-1build7_amd64.deb ...
+Unpacking cmake (3.28.3-1build7) ...
+Setting up libjsoncpp25:amd64 (1.9.5-6build1) ...
+Setting up librhash0:amd64 (1.4.3-3build1) ...
+Setting up cmake-data (3.28.3-1build7) ...
+Setting up cmake (3.28.3-1build7) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+mohaned@mohaned:~$ git clone https://github.com/intrig-unicamp/mininet-wifi.git
+fatal: destination path 'mininet-wifi' already exists and is not an empty directory.
+mohaned@mohaned:~$ cd mininet-wifi
+mohaned@mohaned:~/mininet-wifi$ sudo util/install.sh -Wlnfv
+Detected Linux distribution: Ubuntu 24.04 noble amd64
+Ubuntu
+sys.version_info(major=3, minor=12, micro=3, releaselevel='final', serial=0)
+Detected Python (python) version 3
+Installing Mininet dependencies
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+gcc is already the newest version (4:13.2.0-7ubuntu1).
+make is already the newest version (4.3-4.1build2).
+socat is already the newest version (1.8.0.0-4build3).
+psmisc is already the newest version (23.7-1build1).
+xterm is already the newest version (390-1ubuntu3).
+ssh is already the newest version (1:9.6p1-3ubuntu13.14).
+iperf is already the newest version (2.1.9+dfsg-1).
+telnet is already the newest version (0.17+2.5-3ubuntu4).
+ethtool is already the newest version (1:6.7-1build1).
+help2man is already the newest version (1.49.3).
+pyflakes3 is already the newest version (3.2.0-1).
+pylint is already the newest version (3.0.3-2).
+pycodestyle is already the newest version (2.11.1-1).
+net-tools is already the newest version (2.10-0.1ubuntu4.4).
+python3-pexpect is already the newest version (4.9-2).
+python3-tk is already the newest version (3.12.3-0ubuntu1).
+0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+python3-pip is already the newest version (24.0+dfsg-1ubuntu1.3).
+0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.
+pip 24.0 from /usr/lib/python3/dist-packages/pip (python 3.12)
+DEPRECATION: Loading egg at /usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg is deprecated. pip 24.3 will enforce this behaviour change. A possible replacement is to use pip for package installation.. Discussion can be found at https://github.com/pypa/pip/issues/12330
+Requirement already satisfied: numpy<2 in /usr/local/lib/python3.12/dist-packages (1.26.4)
+Requirement already satisfied: FlightRadarAPI in /usr/local/lib/python3.12/dist-packages (1.4.0)
+Requirement already satisfied: pillow in /usr/lib/python3/dist-packages (10.2.0)
+Requirement already satisfied: bitstring in /usr/local/lib/python3.12/dist-packages (4.3.1)
+Requirement already satisfied: skyfield in /usr/local/lib/python3.12/dist-packages (1.53)
+Requirement already satisfied: requests in /usr/lib/python3/dist-packages (2.31.0)
+Requirement already satisfied: brotli in /usr/local/lib/python3.12/dist-packages (from FlightRadarAPI) (1.2.0)
+Requirement already satisfied: bitarray<4.0,>=3.0.0 in /usr/local/lib/python3.12/dist-packages (from bitstring) (3.8.0)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/lib/python3/dist-packages (from skyfield) (2023.11.17)
+Requirement already satisfied: jplephem>=2.13 in /usr/local/lib/python3.12/dist-packages (from skyfield) (2.23)
+Requirement already satisfied: sgp4>=2.13 in /usr/local/lib/python3.12/dist-packages (from skyfield) (2.25)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+iproute2 is already the newest version (6.1.0-1ubuntu6.2).
+0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+cgroup-tools is already the newest version (2.0.2-2build1).
+0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.
+Installing Mininet-WiFi dependencies
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+wireless-tools is already the newest version (30~pre9-16.1ubuntu2).
+rfkill is already the newest version (2.39.3-9ubuntu6.4).
+pkg-config is already the newest version (1.8.1-2build1).
+libnl-route-3-dev is already the newest version (3.7.0-0.3build1.1).
+libnl-3-dev is already the newest version (3.7.0-0.3build1.1).
+libnl-genl-3-dev is already the newest version (3.7.0-0.3build1.1).
+libssl-dev is already the newest version (3.0.13-0ubuntu3.6).
+make is already the newest version (4.3-4.1build2).
+libevent-dev is already the newest version (2.1.12-stable-9ubuntu2).
+patch is already the newest version (2.7.6-7build3).
+libdbus-1-dev is already the newest version (1.14.10-4ubuntu4.1).
+python3-psutil is already the newest version (5.9.8-2build2).
+python3-matplotlib is already the newest version (3.6.3-1ubuntu5).
+0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.
+/home/mohaned/mininet-wifi /home/mohaned/mininet-wifi
+/home/mohaned/mininet-wifi/hostap /home/mohaned/mininet-wifi /home/mohaned/mininet-wifi
+patching file hostapd/defconfig
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] n
+Skipping patch.
+10 out of 10 hunks ignored -- saving rejects to file hostapd/defconfig.rej
+patching file wpa_supplicant/defconfig
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] n
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file wpa_supplicant/defconfig.rej
+patching file wpa_supplicant/p2p_supplicant.c
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] n
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file wpa_supplicant/p2p_supplicant.c.rej
+mohaned@mohaned:~/mininet-wifi$ sudo mn --wifi
+/usr/local/bin/mn:4: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  __import__('pkg_resources').run_script('mininet-wifi==2.7', 'mn')
+*** Adding stations:
+sta1 sta2 
+*** Adding access points:
+ap1 
+*** Configuring nodes...
+*** Creating network
+*** Adding controller
+*** Adding hosts:
+
+*** Adding switches:
+
+*** Adding links:
+(sta1, ap1) (sta2, ap1) 
+*** Starting controller(s)
+c0 
+*** Starting L2 nodes
+ap1 ...
 *** Starting CLI:
-mininet-wifi> 
+mininet-wifi> pip3 install ryu
+*** Unknown command: pip3 install ryu
+mininet-wifi> exit
+*** Stopping 1 controllers
+c0 
+*** Stopping 3 links
+...
+*** Stopping switches/access points
+ap1 
+*** Stopping nodes
+sta1 sta2 
+
+*** Removing WiFi module and Configurations
+*** Killing mac80211_hwsim
+
+*** Done
+completed in 23.800 seconds
+mohaned@mohaned:~/mininet-wifi$ pip3 install ryu
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    If you wish to install a non-Debian packaged Python application,
+    it may be easiest to use pipx install xyz, which will manage a
+    virtual environment for you. Make sure you have pipx installed.
+    
+    See /usr/share/doc/python3.12/README.venv for more information.
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+mohaned@mohaned:~/mininet-wifi$ pip3 install ryu
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    If you wish to install a non-Debian packaged Python application,
+    it may be easiest to use pipx install xyz, which will manage a
+    virtual environment for you. Make sure you have pipx installed.
+    
+    See /usr/share/doc/python3.12/README.venv for more information.
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+mohaned@mohaned:~/mininet-wifi$ cd..
+cd..: command not found
+mohaned@mohaned:~/mininet-wifi$ cd ..
+mohaned@mohaned:~$ pip3 install ryu
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    If you wish to install a non-Debian packaged Python application,
+    it may be easiest to use pipx install xyz, which will manage a
+    virtual environment for you. Make sure you have pipx installed.
+    
+    See /usr/share/doc/python3.12/README.venv for more information.
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+mohaned@mohaned:~$ 
+
 
 
 -------------------------------
+
 
