@@ -4,40 +4,199 @@ mohaned@mohaned:~$ sudo python3 sdn_project.py
 sudo apt install -y ryu-manager
 
 ---------------------------------------------
-نفّذ الحل التالي حرفيًا (لا تغيّر شيئًا)
-1️⃣ احذف البيئة الحالية (للتنظيف فقط)
-deactivate
-rm -rf ~/ryu-env
+(ryu-env) mohaned@mohaned:~$ deactivate
+mohaned@mohaned:~$ rm -rf ~/ryu-env
+mohaned@mohaned:~$ python3.10 -m venv ~/ryu-env
+mohaned@mohaned:~$ source ~/ryu-env/bin/activate
+(ryu-env) mohaned@mohaned:~$ python --version
+Python 3.10.19
+(ryu-env) mohaned@mohaned:~$ pip install pip==23.2.1
+Collecting pip==23.2.1
+  Downloading pip-23.2.1-py3-none-any.whl (2.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 5.4 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 23.0.1
+    Uninstalling pip-23.0.1:
+      Successfully uninstalled pip-23.0.1
+Successfully installed pip-23.2.1
+WARNING: There was an error checking the latest version of pip.
+(ryu-env) mohaned@mohaned:~$ pip install setuptools==59.6.0 wheel
+Collecting setuptools==59.6.0
+  Obtaining dependency information for setuptools==59.6.0 from https://files.pythonhosted.org/packages/b0/3a/88b210db68e56854d0bcf4b38e165e03be377e13907746f825790f3df5bf/setuptools-59.6.0-py3-none-any.whl.metadata
+  Downloading setuptools-59.6.0-py3-none-any.whl.metadata (5.0 kB)
+Collecting wheel
+  Obtaining dependency information for wheel from https://files.pythonhosted.org/packages/0b/2c/87f3254fd8ffd29e4c02732eee68a83a1d3c346ae39bc6822dcbcb697f2b/wheel-0.45.1-py3-none-any.whl.metadata
+  Downloading wheel-0.45.1-py3-none-any.whl.metadata (2.3 kB)
+Downloading setuptools-59.6.0-py3-none-any.whl (952 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 952.6/952.6 kB 3.4 MB/s eta 0:00:00
+Using cached wheel-0.45.1-py3-none-any.whl (72 kB)
+Installing collected packages: wheel, setuptools
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 79.0.1
+    Uninstalling setuptools-79.0.1:
+      Successfully uninstalled setuptools-79.0.1
+Successfully installed setuptools-59.6.0 wheel-0.45.1
+WARNING: There was an error checking the latest version of pip.
+(ryu-env) mohaned@mohaned:~$ pip install pbr==5.11.1
+Collecting pbr==5.11.1
+  Obtaining dependency information for pbr==5.11.1 from https://files.pythonhosted.org/packages/01/06/4ab11bf70db5a60689fc521b636849c8593eb67a2c6bdf73a16c72d16a12/pbr-5.11.1-py2.py3-none-any.whl.metadata
+  Downloading pbr-5.11.1-py2.py3-none-any.whl.metadata (1.3 kB)
+Downloading pbr-5.11.1-py2.py3-none-any.whl (112 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.7/112.7 kB 1.3 MB/s eta 0:00:00
+Installing collected packages: pbr
+Successfully installed pbr-5.11.1
+WARNING: There was an error checking the latest version of pip.
+(ryu-env) mohaned@mohaned:~$ pip install git+https://github.com/faucetsdn/ryu.git --no-use-pep517
+Collecting git+https://github.com/faucetsdn/ryu.git
+  Cloning https://github.com/faucetsdn/ryu.git to /tmp/pip-req-build-ijcq57kw
+  Running command git clone --filter=blob:none --quiet https://github.com/faucetsdn/ryu.git /tmp/pip-req-build-ijcq57kw
+  Resolved https://github.com/faucetsdn/ryu.git to commit d6cda4f427ff8de82b94c58aa826824a106014c2
+  Preparing metadata (setup.py) ... done
+Collecting eventlet==0.31.1 (from ryu==4.34)
+  Obtaining dependency information for eventlet==0.31.1 from https://files.pythonhosted.org/packages/72/ff/28cffe7b4ee3b1823db5a1186521e48b898dffade680405c690915e5ce8f/eventlet-0.31.1-py2.py3-none-any.whl.metadata
+  Downloading eventlet-0.31.1-py2.py3-none-any.whl.metadata (4.3 kB)
+Collecting msgpack>=0.4.0 (from ryu==4.34)
+  Obtaining dependency information for msgpack>=0.4.0 from https://files.pythonhosted.org/packages/b7/09/2a06956383c0fdebaef5aa9246e2356776f12ea6f2a44bd1368abf0e46c4/msgpack-1.1.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata
+  Downloading msgpack-1.1.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.1 kB)
+Collecting netaddr (from ryu==4.34)
+  Obtaining dependency information for netaddr from https://files.pythonhosted.org/packages/12/cc/f4fe2c7ce68b92cbf5b2d379ca366e1edae38cccaad00f69f529b460c3ef/netaddr-1.3.0-py3-none-any.whl.metadata
+  Downloading netaddr-1.3.0-py3-none-any.whl.metadata (5.0 kB)
+Collecting oslo.config>=2.5.0 (from ryu==4.34)
+  Obtaining dependency information for oslo.config>=2.5.0 from https://files.pythonhosted.org/packages/ec/c9/780ecc7afef133136daf978392938a78d681399e66848ed83ce03612d786/oslo_config-10.1.0-py3-none-any.whl.metadata
+  Downloading oslo_config-10.1.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting ovs>=2.6.0 (from ryu==4.34)
+  Using cached ovs-3.6.1.tar.gz (161 kB)
+  Preparing metadata (setup.py) ... done
+Collecting packaging==20.9 (from ryu==4.34)
+  Obtaining dependency information for packaging==20.9 from https://files.pythonhosted.org/packages/3e/89/7ea760b4daa42653ece2380531c90f64788d979110a2ab51049d92f408af/packaging-20.9-py2.py3-none-any.whl.metadata
+  Downloading packaging-20.9-py2.py3-none-any.whl.metadata (13 kB)
+Collecting routes (from ryu==4.34)
+  Obtaining dependency information for routes from https://files.pythonhosted.org/packages/9b/d4/d3c7d029de6287ff7bd048e628920d4336b4f8d82cfc00ff078bdbb212a3/Routes-2.5.1-py2.py3-none-any.whl.metadata
+  Downloading Routes-2.5.1-py2.py3-none-any.whl.metadata (25 kB)
+Collecting six>=1.4.0 (from ryu==4.34)
+  Obtaining dependency information for six>=1.4.0 from https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl.metadata
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting tinyrpc==1.0.4 (from ryu==4.34)
+  Downloading tinyrpc-1.0.4.tar.gz (26 kB)
+  Preparing metadata (setup.py) ... done
+Collecting webob>=1.2 (from ryu==4.34)
+  Obtaining dependency information for webob>=1.2 from https://files.pythonhosted.org/packages/50/bd/c336448be43d40be28e71f2e0f3caf7ccb28e2755c58f4c02c065bfe3e8e/WebOb-1.8.9-py2.py3-none-any.whl.metadata
+  Downloading WebOb-1.8.9-py2.py3-none-any.whl.metadata (11 kB)
+Collecting dnspython<2.0.0,>=1.15.0 (from eventlet==0.31.1->ryu==4.34)
+  Obtaining dependency information for dnspython<2.0.0,>=1.15.0 from https://files.pythonhosted.org/packages/ec/d3/3aa0e7213ef72b8585747aa0e271a9523e713813b9a20177ebe1e939deb0/dnspython-1.16.0-py2.py3-none-any.whl.metadata
+  Downloading dnspython-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+Collecting greenlet>=0.3 (from eventlet==0.31.1->ryu==4.34)
+  Obtaining dependency information for greenlet>=0.3 from https://files.pythonhosted.org/packages/b6/a8/15d0aa26c0036a15d2659175af00954aaaa5d0d66ba538345bd88013b4d7/greenlet-3.3.0-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata
+  Downloading greenlet-3.3.0-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+Collecting pyparsing>=2.0.2 (from packaging==20.9->ryu==4.34)
+  Obtaining dependency information for pyparsing>=2.0.2 from https://files.pythonhosted.org/packages/10/5e/1aa9a93198c6b64513c9d7752de7422c06402de6600a8767da1524f9570b/pyparsing-3.2.5-py3-none-any.whl.metadata
+  Downloading pyparsing-3.2.5-py3-none-any.whl.metadata (5.0 kB)
+Collecting stevedore>=1.20.0 (from oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for stevedore>=1.20.0 from https://files.pythonhosted.org/packages/f4/40/8561ce06dc46fd17242c7724ab25b257a2ac1b35f4ebf551b40ce6105cfa/stevedore-5.6.0-py3-none-any.whl.metadata
+  Downloading stevedore-5.6.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting oslo.i18n>=3.15.3 (from oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for oslo.i18n>=3.15.3 from https://files.pythonhosted.org/packages/12/12/6215fd01b902973a8e27c8fc8d1c215fabc12ee0211ae4fe60ae0d0f79dd/oslo_i18n-6.7.1-py3-none-any.whl.metadata
+  Downloading oslo_i18n-6.7.1-py3-none-any.whl.metadata (1.9 kB)
+Collecting rfc3986>=1.2.0 (from oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for rfc3986>=1.2.0 from https://files.pythonhosted.org/packages/ff/9a/9afaade874b2fa6c752c36f1548f718b5b83af81ed9b76628329dab81c1b/rfc3986-2.0.0-py2.py3-none-any.whl.metadata
+  Downloading rfc3986-2.0.0-py2.py3-none-any.whl.metadata (6.6 kB)
+Collecting PyYAML>=5.1 (from oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for PyYAML>=5.1 from https://files.pythonhosted.org/packages/7a/1e/7acc4f0e74c4b3d9531e24739e0ab832a5edf40e64fbae1a9c01941cabd7/pyyaml-6.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata
+  Downloading pyyaml-6.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting requests>=2.18.0 (from oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for requests>=2.18.0 from https://files.pythonhosted.org/packages/1e/db/4254e3eabe8020b458f1a747140d32277ec7a271daf1d235b70dc0b4e6e3/requests-2.32.5-py3-none-any.whl.metadata
+  Downloading requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+Collecting sortedcontainers (from ovs>=2.6.0->ryu==4.34)
+  Obtaining dependency information for sortedcontainers from https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata
+  Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata (10 kB)
+Collecting repoze.lru>=0.3 (from routes->ryu==4.34)
+  Obtaining dependency information for repoze.lru>=0.3 from https://files.pythonhosted.org/packages/b0/30/6cc0c95f0b59ad4b3b9163bff7cdcf793cc96fac64cf398ff26271f5cf5e/repoze.lru-0.7-py3-none-any.whl.metadata
+  Downloading repoze.lru-0.7-py3-none-any.whl.metadata (1.1 kB)
+Requirement already satisfied: pbr>=2.0.0 in ./ryu-env/lib/python3.10/site-packages (from oslo.i18n>=3.15.3->oslo.config>=2.5.0->ryu==4.34) (5.11.1)
+Collecting charset_normalizer<4,>=2 (from requests>=2.18.0->oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for charset_normalizer<4,>=2 from https://files.pythonhosted.org/packages/36/3b/60cbd1f8e93aa25d1c669c649b7a655b0b5fb4c571858910ea9332678558/charset_normalizer-3.4.4-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata
+  Downloading charset_normalizer-3.4.4-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (37 kB)
+Collecting idna<4,>=2.5 (from requests>=2.18.0->oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for idna<4,>=2.5 from https://files.pythonhosted.org/packages/0e/61/66938bbb5fc52dbdf84594873d5b51fb1f7c7794e9c0f5bd885f30bc507b/idna-3.11-py3-none-any.whl.metadata
+  Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+Collecting urllib3<3,>=1.21.1 (from requests>=2.18.0->oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for urllib3<3,>=1.21.1 from https://files.pythonhosted.org/packages/6d/b9/4095b668ea3678bf6a0af005527f39de12fb026516fb3df17495a733b7f8/urllib3-2.6.2-py3-none-any.whl.metadata
+  Downloading urllib3-2.6.2-py3-none-any.whl.metadata (6.6 kB)
+Collecting certifi>=2017.4.17 (from requests>=2.18.0->oslo.config>=2.5.0->ryu==4.34)
+  Obtaining dependency information for certifi>=2017.4.17 from https://files.pythonhosted.org/packages/70/7d/9bc192684cea499815ff478dfcdc13835ddf401365057044fb721ec6bddb/certifi-2025.11.12-py3-none-any.whl.metadata
+  Downloading certifi-2025.11.12-py3-none-any.whl.metadata (2.5 kB)
+Downloading eventlet-0.31.1-py2.py3-none-any.whl (224 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.5/224.5 kB 2.1 MB/s eta 0:00:00
+Downloading packaging-20.9-py2.py3-none-any.whl (40 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.9/40.9 kB 2.2 MB/s eta 0:00:00
+Downloading msgpack-1.1.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (406 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 406.1/406.1 kB 4.6 MB/s eta 0:00:00
+Downloading oslo_config-10.1.0-py3-none-any.whl (131 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 131.6/131.6 kB 4.2 MB/s eta 0:00:00
+Using cached netaddr-1.3.0-py3-none-any.whl (2.3 MB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached WebOb-1.8.9-py2.py3-none-any.whl (115 kB)
+Using cached Routes-2.5.1-py2.py3-none-any.whl (40 kB)
+Downloading dnspython-1.16.0-py2.py3-none-any.whl (188 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 188.4/188.4 kB 13.3 MB/s eta 0:00:00
+Downloading greenlet-3.3.0-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (586 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 586.9/586.9 kB 10.9 MB/s eta 0:00:00
+Downloading oslo_i18n-6.7.1-py3-none-any.whl (47 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.7/47.7 kB 3.7 MB/s eta 0:00:00
+Downloading pyparsing-3.2.5-py3-none-any.whl (113 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 113.9/113.9 kB 7.3 MB/s eta 0:00:00
+Downloading pyyaml-6.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (770 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 770.3/770.3 kB 11.9 MB/s eta 0:00:00
+Using cached repoze.lru-0.7-py3-none-any.whl (10 kB)
+Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+Using cached rfc3986-2.0.0-py2.py3-none-any.whl (31 kB)
+Downloading stevedore-5.6.0-py3-none-any.whl (54 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.4/54.4 kB 3.9 MB/s eta 0:00:00
+Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+Using cached certifi-2025.11.12-py3-none-any.whl (159 kB)
+Downloading charset_normalizer-3.4.4-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (153 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 153.6/153.6 kB 11.7 MB/s eta 0:00:00
+Using cached idna-3.11-py3-none-any.whl (71 kB)
+Using cached urllib3-2.6.2-py3-none-any.whl (131 kB)
+Building wheels for collected packages: ryu, tinyrpc, ovs
+  Building wheel for ryu (setup.py) ... done
+  Created wheel for ryu: filename=ryu-4.34-py3-none-any.whl size=2200723 sha256=9eb2b603db33c059b95b3ad0d2755067301b9e8e34e54105b8f2d071ee2c448b
+  Stored in directory: /tmp/pip-ephem-wheel-cache-bz13cw47/wheels/85/7c/00/44bfb43f991aea910c0edd7f9602f0a7ead04eaebd5fcbda3f
+  Building wheel for tinyrpc (setup.py) ... done
+  Created wheel for tinyrpc: filename=tinyrpc-1.0.4-py3-none-any.whl size=35022 sha256=57ca3d28c87de4a06e5b385abeffab0f6a20cc5dcabbc4176fded5a12907f3b5
+  Stored in directory: /home/mohaned/.cache/pip/wheels/a5/3c/22/69d188d92b7d40627a780d14d4d2245868ba334d48e8d12842
+  Building wheel for ovs (setup.py) ... done
+  Created wheel for ovs: filename=ovs-3.6.1-py3-none-any.whl size=190601 sha256=60d30b77160a6d6dd3a411f2a04bf0e710cc74f3d38d17676302cd172fd45d71
+  Stored in directory: /home/mohaned/.cache/pip/wheels/64/d9/b2/beafa739289d84ecb380ba7a259662050d31d3450a0685a605
+Successfully built ryu tinyrpc ovs
+Installing collected packages: sortedcontainers, repoze.lru, webob, urllib3, stevedore, six, rfc3986, PyYAML, pyparsing, ovs, oslo.i18n, netaddr, msgpack, idna, greenlet, dnspython, charset_normalizer, certifi, tinyrpc, routes, requests, packaging, eventlet, oslo.config, ryu
+Successfully installed PyYAML-6.0.3 certifi-2025.11.12 charset_normalizer-3.4.4 dnspython-1.16.0 eventlet-0.31.1 greenlet-3.3.0 idna-3.11 msgpack-1.1.2 netaddr-1.3.0 oslo.config-10.1.0 oslo.i18n-6.7.1 ovs-3.6.1 packaging-20.9 pyparsing-3.2.5 repoze.lru-0.7 requests-2.32.5 rfc3986-2.0.0 routes-2.5.1 ryu-4.34 six-1.17.0 sortedcontainers-2.4.0 stevedore-5.6.0 tinyrpc-1.0.4 urllib3-2.6.2 webob-1.8.9
+WARNING: There was an error checking the latest version of pip.
+(ryu-env) mohaned@mohaned:~$ ryu-manager --version
+Traceback (most recent call last):
+  File "/home/mohaned/ryu-env/bin/ryu-manager", line 5, in <module>
+    from ryu.cmd.manager import main
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/ryu/cmd/manager.py", line 22, in <module>
+    from ryu.lib import hub
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/ryu/lib/hub.py", line 30, in <module>
+    import eventlet
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/__init__.py", line 17, in <module>
+    from eventlet import convenience
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/convenience.py", line 7, in <module>
+    from eventlet.green import socket
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/green/socket.py", line 4, in <module>
+    __import__('eventlet.green._socket_nodns')
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/green/_socket_nodns.py", line 11, in <module>
+    from eventlet import greenio
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/greenio/__init__.py", line 3, in <module>
+    from eventlet.greenio.base import *  # noqa
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/greenio/base.py", line 32, in <module>
+    socket_timeout = eventlet.timeout.wrap_is_timeout(socket.timeout)
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/timeout.py", line 166, in wrap_is_timeout
+    base.is_timeout = property(lambda _: True)
+TypeError: cannot set 'is_timeout' attribute of immutable type 'TimeoutError'
+(ryu-env) mohaned@mohaned:~$ which ryu-manager
+/home/mohaned/ryu-env/bin/ryu-manager
+(ryu-env) mohaned@mohaned:~$ 
 
-2️⃣ أنشئ بيئة جديدة بـ Python 3.10
-python3.10 -m venv ~/ryu-env
-source ~/ryu-env/bin/activate
-
-
-تأكد:
-
-python --version
-# Python 3.10.x
-
-3️⃣ ثبّت أدوات متوافقة (إصدارات قديمة متعمدة)
-pip install pip==23.2.1
-pip install setuptools==59.6.0 wheel
-pip install pbr==5.11.1
-
-
-⚠️ نعم، هذه الإصدارات قديمة عمداً
-✔ لكنها متوافقة مع Ryu
-
-4️⃣ ثبّت Ryu من GitHub (الطريقة الصحيحة)
-pip install git+https://github.com/faucetsdn/ryu.git --no-use-pep517
-
-
-⏳ انتظر… سيأخذ دقيقة
-
-5️⃣ التحقق (اللحظة الحاسمة)
-ryu-manager --version
-
-
-أو:
-
-which ryu-manager
