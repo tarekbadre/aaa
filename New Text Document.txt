@@ -1,20 +1,21 @@
 mohaned@mohaned:~$ nano sdn_project.py
 mohaned@mohaned:~$ sudo python3 sdn_project.py
-*** Creating nodes
-*** Connecting to wmediumd server /var/run/wmediumd.sock
-*** Starting network
-*** Monitoring RSSI & adapting Tx Power
-[0] RSSI=-70.0 dBm | TxPower=14
-[1] RSSI=-70.0 dBm | TxPower=14
-[2] RSSI=-70.0 dBm | TxPower=14
-[3] RSSI=-70.0 dBm | TxPower=14
-[4] RSSI=-70.0 dBm | TxPower=14
-[5] RSSI=-70.0 dBm | TxPower=14
-[6] RSSI=-70.0 dBm | TxPower=14
-[7] RSSI=-70.0 dBm | TxPower=14
-[8] RSSI=-70.0 dBm | TxPower=14
-[9] RSSI=-70.0 dBm | TxPower=14
-*** Starting CLI:
-mininet-wifi> 
-Interrupt
-mininet-wifi> 
+
+net.configureWifiNodes()
+net.setPropagationModel(model="logDistance", exp=4)
+
+time.sleep(3)
+
+for i in range(10):
+
+    rssi = sta1.wintfs[0].rssi
+    tx = ap1.params['txpower']
+
+    info(f"[{i}] RSSI={rssi} dBm | TxPower={tx}\n")
+
+    if rssi <= -70:
+        info("⚠ Weak signal → Increasing Tx Power\n")
+        ap1.setTxPower(tx + 3)
+
+    time.sleep(2)
+
