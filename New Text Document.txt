@@ -3,32 +3,70 @@ mohaned@mohaned:~$ sudo python3 sdn_project.py
 ----------------------------------------------
 sudo apt install -y ryu-manager
 
--------------------------------
-تثبيت Python 3.10
-sudo apt install -y python3.10 python3.10-venv python3.10-distutils
+---------------------------------------------
+mohaned@mohaned:~$ sudo apt install -y python3.10 python3.10-venv python3.10-distutils
+[sudo] password for mohaned: 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+python3.10 is already the newest version (3.10.19-1+noble1).
+python3.10-venv is already the newest version (3.10.19-1+noble1).
+python3.10-distutils is already the newest version (3.10.19-1+noble1).
+0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.
+mohaned@mohaned:~$ python3.10 --version
+Python 3.10.19
+mohaned@mohaned:~$ python3.10 -m venv ryu-env
+mohaned@mohaned:~$ source ryu-env/bin/activate
+(ryu-env) mohaned@mohaned:~$ pip install --upgrade pip setuptools wheel
+Requirement already satisfied: pip in ./ryu-env/lib/python3.10/site-packages (25.3)
+Requirement already satisfied: setuptools in ./ryu-env/lib/python3.10/site-packages (79.0.1)
+Collecting setuptools
+  Using cached setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)
+Requirement already satisfied: wheel in ./ryu-env/lib/python3.10/site-packages (0.45.1)
+Using cached setuptools-80.9.0-py3-none-any.whl (1.2 MB)
+Installing collected packages: setuptools
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 79.0.1
+    Uninstalling setuptools-79.0.1:
+      Successfully uninstalled setuptools-79.0.1
+Successfully installed setuptools-80.9.0
+(ryu-env) mohaned@mohaned:~$ pip install ryu
+Collecting ryu
+  Using cached ryu-4.34.tar.gz (1.1 MB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... error
+  error: subprocess-exited-with-error
+  
+  × Getting requirements to build wheel did not run successfully.
+  │ exit code: 1
+  ╰─> [21 lines of output]
+      Traceback (most recent call last):
+        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 389, in <module>
+          main()
+        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 373, in main
+          json_out["return_val"] = hook(**hook_input["kwargs"])
+        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 143, in get_requires_for_build_wheel
+          return hook(config_settings)
+        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 331, in get_requires_for_build_wheel
+          return self._get_build_requires(config_settings, requirements=[])
+        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 301, in _get_build_requires
+          self.run_setup()
+        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 512, in run_setup
+          super().run_setup(setup_script=setup_script)
+        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 317, in run_setup
+          exec(code, locals())
+        File "<string>", line 27, in <module>
+        File "/tmp/pip-install-rvb9r4ce/ryu_3803c00871da4dafba476fe7cbe942b8/ryu/hooks.py", line 36, in save_orig
+          _main_module()._orig_get_script_args = easy_install.get_script_args
+        File "/tmp/pip-build-env-58iaz4en/overlay/lib/python3.10/site-packages/setuptools/command/easy_install.py", line 15, in __getattr__
+          attr = getattr(
+      AttributeError: 'types.SimpleNamespace' object has no attribute 'get_script_args'
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+ERROR: Failed to build 'ryu' when getting requirements to build wheel
+(ryu-env) mohaned@mohaned:~$ ryu-manager --version
+ryu-manager: command not found
+(ryu-env) mohaned@mohaned:~$ 
 
-
-تحقق:
-
-python3.10 --version
-
-2️⃣ إنشاء بيئة افتراضية بـ Python 3.10
-python3.10 -m venv ryu-env
-
-3️⃣ تفعيلها
-source ryu-env/bin/activate
-
-
-يظهر:
-
-(ryu-env) mohaned@mohaned:~$
-
-4️⃣ تحديث أدوات البناء
-pip install --upgrade pip setuptools wheel
-
-5️⃣ تثبيت Ryu (سينجح الآن)
-pip install ryu
-
-6️⃣ التحقق
-ryu-manager --version
 
