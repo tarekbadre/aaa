@@ -4,35 +4,20 @@ mohaned@mohaned:~$ sudo python3 sdn_project.py
 sudo apt install -y ryu-manager
 
 ---------------------------------------------
-(ryu-env) mohaned@mohaned:~$ pip uninstall -y dnspython
-Found existing installation: dnspython 1.16.0
-Uninstalling dnspython-1.16.0:
-  Successfully uninstalled dnspython-1.16.0
-(ryu-env) mohaned@mohaned:~$ pip show dnspython
-WARNING: Package(s) not found: dnspython
-(ryu-env) mohaned@mohaned:~$ ryu-manager ryu.app.simple_switch_13
-Traceback (most recent call last):
-  File "/home/mohaned/ryu-env/bin/ryu-manager", line 5, in <module>
-    from ryu.cmd.manager import main
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/ryu/cmd/manager.py", line 22, in <module>
-    from ryu.lib import hub
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/ryu/lib/hub.py", line 30, in <module>
-    import eventlet
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/__init__.py", line 17, in <module>
-    from eventlet import convenience
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/convenience.py", line 7, in <module>
-    from eventlet.green import socket
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/green/socket.py", line 21, in <module>
-    from eventlet.support import greendns
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/support/greendns.py", line 64, in <module>
-    dns = import_patched('dns')
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/support/greendns.py", line 61, in import_patched
-    return patcher.import_patched(module_name, **modules)
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/patcher.py", line 132, in import_patched
-    return inject(
-  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/patcher.py", line 109, in inject
-    module = __import__(module_name, {}, {}, module_name.split('.')[:-1])
-ModuleNotFoundError: No module named 'dns'
-(ryu-env) mohaned@mohaned:~$ 
+الحل النهائي (سطر واحد فقط)
+🔧 ثبّت dnspython المتوافق مع Python 3.10
+pip install dnspython==2.2.1
+
+🧪 بعد التثبيت تأكد
+pip show dnspython
 
 
+يجب أن ترى:
+
+Version: 2.2.1
+
+🚀 الاختبار النهائي
+ryu-manager ryu.app.simple_switch_13
+
+✅ النتيجة الصحيحة المتوقعة:
+loading app ryu.app.simple_switch_13
