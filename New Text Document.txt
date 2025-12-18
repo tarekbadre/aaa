@@ -4,135 +4,31 @@ mohaned@mohaned:~$ sudo python3 sdn_project.py
 sudo apt install -y ryu-manager
 
 -------------------------------
-mohaned@mohaned:~$ ryu-manager --version
-ryu-manager: command not found
-mohaned@mohaned:~$ sudo apt install -y python3-full python3-venv
-Reading package lists... Done
-Building dependency tree... Done
-Reading state information... Done
-python3-venv is already the newest version (3.12.3-0ubuntu2.1).
-The following additional packages will be installed:
-  2to3 fonts-mathjax idle idle-python3.12 libjs-mathjax
-  libpython3.12-testsuite python3-doc python3-examples python3-lib2to3
-  python3.12-doc python3.12-examples python3.12-full
-Suggested packages:
-  fonts-mathjax-extras fonts-stix libjs-mathjax-doc
-The following NEW packages will be installed:
-  2to3 fonts-mathjax idle idle-python3.12 libjs-mathjax
-  libpython3.12-testsuite python3-doc python3-examples python3-full
-  python3-lib2to3 python3.12-doc python3.12-examples python3.12-full
-0 upgraded, 13 newly installed, 0 to remove and 26 not upgraded.
-Need to get 25.9 MB of archives.
-After this operation, 149 MB of additional disk space will be used.
-Get:1 http://archive.ubuntu.com/ubuntu noble/universe amd64 python3-lib2to3 all 3.12.3-0ubuntu1 [78.0 kB]
-Get:2 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 2to3 all 3.12.3-0ubuntu2.1 [11.1 kB]
-Get:3 http://archive.ubuntu.com/ubuntu noble/main amd64 fonts-mathjax all 2.7.9+dfsg-1 [2,208 kB]
-Get:4 http://archive.ubuntu.com/ubuntu noble/main amd64 libjs-mathjax all 2.7.9+dfsg-1 [5,665 kB]
-Get:5 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 idle-python3.12 all 3.12.3-1ubuntu0.9 [423 kB]
-Get:6 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 idle all 3.12.3-0ubuntu2.1 [2,728 B]
-Get:7 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 libpython3.12-testsuite all 3.12.3-1ubuntu0.9 [4,634 kB]
-Get:8 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3.12-doc all 3.12.3-1ubuntu0.9 [12.1 MB]
-Get:9 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-doc all 3.12.3-0ubuntu2.1 [10.3 kB]
-Get:10 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3.12-examples all 3.12.3-1ubuntu0.9 [797 kB]
-Get:11 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-examples all 3.12.3-0ubuntu2.1 [884 B]
-Get:12 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 python3.12-full amd64 3.12.3-1ubuntu0.9 [1,120 B]
-Get:13 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 python3-full amd64 3.12.3-0ubuntu2.1 [1,156 B]
-Fetched 25.9 MB in 5s (5,693 kB/s)  
-Selecting previously unselected package python3-lib2to3.
-(Reading database ... 182104 files and directories currently installed.)
-Preparing to unpack .../00-python3-lib2to3_3.12.3-0ubuntu1_all.deb ...
-Unpacking python3-lib2to3 (3.12.3-0ubuntu1) ...
-Selecting previously unselected package 2to3.
-Preparing to unpack .../01-2to3_3.12.3-0ubuntu2.1_all.deb ...
-Unpacking 2to3 (3.12.3-0ubuntu2.1) ...
-Selecting previously unselected package fonts-mathjax.
-Preparing to unpack .../02-fonts-mathjax_2.7.9+dfsg-1_all.deb ...
-Unpacking fonts-mathjax (2.7.9+dfsg-1) ...
-Selecting previously unselected package libjs-mathjax.
-Preparing to unpack .../03-libjs-mathjax_2.7.9+dfsg-1_all.deb ...
-Unpacking libjs-mathjax (2.7.9+dfsg-1) ...
-Selecting previously unselected package idle-python3.12.
-Preparing to unpack .../04-idle-python3.12_3.12.3-1ubuntu0.9_all.deb ...
-Unpacking idle-python3.12 (3.12.3-1ubuntu0.9) ...
-Selecting previously unselected package idle.
-Preparing to unpack .../05-idle_3.12.3-0ubuntu2.1_all.deb ...
-Unpacking idle (3.12.3-0ubuntu2.1) ...
-Selecting previously unselected package libpython3.12-testsuite.
-Preparing to unpack .../06-libpython3.12-testsuite_3.12.3-1ubuntu0.9_all.deb ...
-Unpacking libpython3.12-testsuite (3.12.3-1ubuntu0.9) ...
-Selecting previously unselected package python3.12-doc.
-Preparing to unpack .../07-python3.12-doc_3.12.3-1ubuntu0.9_all.deb ...
-Unpacking python3.12-doc (3.12.3-1ubuntu0.9) ...
-Selecting previously unselected package python3-doc.
-Preparing to unpack .../08-python3-doc_3.12.3-0ubuntu2.1_all.deb ...
-Unpacking python3-doc (3.12.3-0ubuntu2.1) ...
-Selecting previously unselected package python3.12-examples.
-Preparing to unpack .../09-python3.12-examples_3.12.3-1ubuntu0.9_all.deb ...
-Unpacking python3.12-examples (3.12.3-1ubuntu0.9) ...
-Selecting previously unselected package python3-examples.
-Preparing to unpack .../10-python3-examples_3.12.3-0ubuntu2.1_all.deb ...
-Unpacking python3-examples (3.12.3-0ubuntu2.1) ...
-Selecting previously unselected package python3.12-full.
-Preparing to unpack .../11-python3.12-full_3.12.3-1ubuntu0.9_amd64.deb ...
-Unpacking python3.12-full (3.12.3-1ubuntu0.9) ...
-Selecting previously unselected package python3-full.
-Preparing to unpack .../12-python3-full_3.12.3-0ubuntu2.1_amd64.deb ...
-Unpacking python3-full (3.12.3-0ubuntu2.1) ...
-Setting up fonts-mathjax (2.7.9+dfsg-1) ...
-Setting up libjs-mathjax (2.7.9+dfsg-1) ...
-Setting up python3.12-examples (3.12.3-1ubuntu0.9) ...
-Setting up libpython3.12-testsuite (3.12.3-1ubuntu0.9) ...
-Setting up python3.12-doc (3.12.3-1ubuntu0.9) ...
-Setting up python3-lib2to3 (3.12.3-0ubuntu1) ...
-Setting up python3-doc (3.12.3-0ubuntu2.1) ...
-Setting up idle-python3.12 (3.12.3-1ubuntu0.9) ...
-Setting up python3.12-full (3.12.3-1ubuntu0.9) ...
-Setting up idle (3.12.3-0ubuntu2.1) ...
-Setting up 2to3 (3.12.3-0ubuntu2.1) ...
-Setting up python3-examples (3.12.3-0ubuntu2.1) ...
-Setting up python3-full (3.12.3-0ubuntu2.1) ...
-Processing triggers for install-info (7.1-3build2) ...
-Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
-Processing triggers for desktop-file-utils (0.27-2build1) ...
-Processing triggers for gnome-menus (3.36.0-1.1ubuntu3) ...
-Processing triggers for man-db (2.12.0-4build2) ...
-mohaned@mohaned:~$ python3 -m venv ryu-env
-mohaned@mohaned:~$ source ryu-env/bin/activate
-(ryu-env) mohaned@mohaned:~$ pip install ryu
-Collecting ryu
-  Using cached ryu-4.34.tar.gz (1.1 MB)
-  Installing build dependencies ... done
-  Getting requirements to build wheel ... error
-  error: subprocess-exited-with-error
-  
-  × Getting requirements to build wheel did not run successfully.
-  │ exit code: 1
-  ╰─> [21 lines of output]
-      Traceback (most recent call last):
-        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 389, in <module>
-          main()
-        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 373, in main
-          json_out["return_val"] = hook(**hook_input["kwargs"])
-        File "/home/mohaned/ryu-env/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 143, in get_requires_for_build_wheel
-          return hook(config_settings)
-        File "/tmp/pip-build-env-7gwagxn7/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 331, in get_requires_for_build_wheel
-          return self._get_build_requires(config_settings, requirements=[])
-        File "/tmp/pip-build-env-7gwagxn7/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 301, in _get_build_requires
-          self.run_setup()
-        File "/tmp/pip-build-env-7gwagxn7/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 512, in run_setup
-          super().run_setup(setup_script=setup_script)
-        File "/tmp/pip-build-env-7gwagxn7/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 317, in run_setup
-          exec(code, locals())
-        File "<string>", line 27, in <module>
-        File "/tmp/pip-install-lr2dmsj7/ryu_a8d5f29116924687a6fefc48f3901c8b/ryu/hooks.py", line 36, in save_orig
-          _main_module()._orig_get_script_args = easy_install.get_script_args
-        File "/tmp/pip-build-env-7gwagxn7/overlay/lib/python3.10/site-packages/setuptools/command/easy_install.py", line 15, in __getattr__
-          attr = getattr(
-      AttributeError: 'types.SimpleNamespace' object has no attribute 'get_script_args'
-      [end of output]
-  
-  note: This error originates from a subprocess, and is likely not a problem with pip.
-ERROR: Failed to build 'ryu' when getting requirements to build wheel
+تثبيت Python 3.10
+sudo apt install -y python3.10 python3.10-venv python3.10-distutils
+
+
+تحقق:
+
+python3.10 --version
+
+2️⃣ إنشاء بيئة افتراضية بـ Python 3.10
+python3.10 -m venv ryu-env
+
+3️⃣ تفعيلها
+source ryu-env/bin/activate
+
+
+يظهر:
+
 (ryu-env) mohaned@mohaned:~$
 
+4️⃣ تحديث أدوات البناء
+pip install --upgrade pip setuptools wheel
+
+5️⃣ تثبيت Ryu (سينجح الآن)
+pip install ryu
+
+6️⃣ التحقق
+ryu-manager --version
 
