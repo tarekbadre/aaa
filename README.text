@@ -1,67 +1,75 @@
-y anyway? [n] n
-Skipping patch.
-10 out of 10 hunks ignored -- saving rejects to file hostapd/defconfig.rej
-patching file wpa_supplicant/defconfig
-Reversed (or previously applied) patch detected!  Assume -R? [n] n
-Apply anyway? [n] n
-Skipping patch.
-7 out of 7 hunks ignored -- saving rejects to file wpa_supplicant/defconfig.rej
-patching file wpa_supplicant/p2p_supplicant.c
-Reversed (or previously applied) patch detected!  Assume -R? [n] n
-Apply anyway? [n] n
-Skipping patch.
-1 out of 1 hunk ignored -- saving rejects to file wpa_supplicant/p2p_supplicant.c.rej
-mohaned@mohaned:~/mininet-wifi$ sudo python3 -c "from mininet.wifi.net import Mininet_wifi; print('OK')"
-Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-ModuleNotFoundError: No module named 'mininet.wifi'
-mohaned@mohaned:~/mininet-wifi$ cp adaptive_power.py ~/mininet-wifi/
-cp: 'adaptive_power.py' and '/home/mohaned/mininet-wifi/adaptive_power.py' are the same file
-mohaned@mohaned:~/mininet-wifi$ nano adaptive_power.py
-mohaned@mohaned:~/mininet-wifi$ cd ~/mininet-wifi
-mohaned@mohaned:~/mininet-wifi$ sudo python3 adaptive_power.py
-Traceback (most recent call last):
-  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 77, in <module>
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y git python3 python3-pip net-tools \
+build-essential cmake libnl-3-dev libnl-genl-3-dev \
+iproute2 iw wireless-tools
+git clone https://github.com/intrig-unicamp/mininet-wifi.git
+cd mininet-wifi
+sudo util/install.sh -Wlnfv
+sudo mn --wifi
+pip3 install ryu
+ryu-manager --version
+nano topology.py
+from mininet.node import Controller
+from mininet.log import setLogLevel
+from mn_wifi.net import Mininet_wifi
+from mn_wifi.cli import CLI
+
+def topology():
+    net = Mininet_wifi(controller=Controller)
+
+    c1 = net.addController('c1')
+
+    ap1 = net.addAccessPoint('ap1', ssid="wifi1",
+                             mode="g", channel="1",
+                             position='0,0,0',
+                             txpower=10)
+
+    ap2 = net.addAccessPoint('ap2', ssid="wifi2",
+                             mode="g", channel="6",
+                             position='50,0,0',
+                             txpower=10)
+
+    h1 = net.addStation('h1', position='10,0,0')
+    h2 = net.addStation('h2', position='40,0,0')
+
+    net.configureWifiNodes()
+    net.build()
+    c1.start()
+    ap1.start([c1])
+    ap2.start([c1])
+
+    CLI(net)
+    net.stop()
+
+if __name__ == '__main__':
     setLogLevel('info')
-    ^^^^^^^^^^^
-NameError: name 'setLogLevel' is not defined
-mohaned@mohaned:~/mininet-wifi$ nano adaptive_power.py
-mohaned@mohaned:~/mininet-wifi$ sudo python3 adaptive_power.py
-*** Creating nodes
-*** Configuring wifi nodes
-*** Starting network
-*** Monitoring RSSI & adjusting power
-Traceback (most recent call last):
-  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 60, in <module>
     topology()
-  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 41, in topology
-    rssi = sta.get_rssi(ap1)
-           ^^^^^^^^^^^^
-AttributeError: 'Station' object has no attribute 'get_rssi'
-mohaned@mohaned:~/mininet-wifi$ nano adaptive_power.py
-mohaned@mohaned:~/mininet-wifi$ sudo python3 adaptive_power.py
-*** Creating nodes
-*** Configuring wifi nodes
-*** Starting network
-*** Monitoring RSSI & adjusting power
-Traceback (most recent call last):
-  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 65, in <module>
-    topology()
-  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 50, in topology
-    tx = sta.params['txpower'][0]
-         ~~~~~~~~~~~~~~~~~~~~~^^^
-TypeError: 'int' object is not subscriptable
-mohaned@mohaned:~/mininet-wifi$ nano adaptive_power.py~
-mohaned@mohaned:~/mininet-wifi$ sudo python3 adaptive_power.py
-*** Creating nodes
-*** Configuring wifi nodes
-*** Starting network
-*** Monitoring RSSI & adjusting power
-Traceback (most recent call last):
-  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 65, in <module>
-    topology()
-  File "/home/mohaned/mininet-wifi/adaptive_power.py", line 50, in topology
-    tx = sta.params['txpower'][0]
-         ~~~~~~~~~~~~~~~~~~~~~^^^
-TypeError: 'int' object is not subscriptable
-mohaned@mohaned:~/mininet-wifi$ 
+--------------------------
+sudo python3 topology.py
+h1 iw dev h1-wlan0 link
+الخطوة 14: إنشاء كود المتحكم
+nano ryu_rssi.py
+---------------
+import time
+import os
+
+RSSI_THRESHOLD = -70
+TX_STEP = 5
+MAX_TX = 20
+
+while True:
+    rssi = int(os.popen(
+        "iw dev h1-wlan0 link | grep signal | awk '{print $2}'"
+    ).read())
+
+    if rssi < RSSI_THRESHOLD:
+        os.system("iw dev ap1-wlan0 set txpower fixed 1500")
+        print("تم رفع قدرة الإرسال")
+
+    time.sleep(5)
+
+-------------
+ryu-manager ryu_rssi.py
+h1 setPosition 45,0,0
+h1 ping h2
