@@ -1,43 +1,59 @@
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y git python3 python3-pip net-tools \
-build-essential cmake libnl-3-dev libnl-genl-3-dev \
-iproute2 iw wireless-tools
-git clone https://github.com/intrig-unicamp/mininet-wifi.git
-cd mininet-wifi
-sudo util/install.sh -Wlnfv
-sudo mn --wifi
-pip3 install ryu
-ryu-manager --version
-nano topology.py
-from mininet.node import Controller
-from mininet.log import setLogLevel
+#!/usr/bin/python3
+
 from mn_wifi.net import Mininet_wifi
+from mn_wifi.node import OVSKernelAP
 from mn_wifi.cli import CLI
+from mn_wifi.link import wmediumd
+from mn_wifi.wmediumdConnector import interference
+
+from mininet.log import setLogLevel, info
+import time
 
 def topology():
-    net = Mininet_wifi(controller=Controller)
 
-    c1 = net.addController('c1')
+    net = Mininet_wifi(
+        controller=None,
+        accessPoint=OVSKernelAP,
+        link=wmediumd,
+        wmediumd_mode=interference
+    )
 
-    ap1 = net.addAccessPoint('ap1', ssid="wifi1",
-                             mode="g", channel="1",
-                             position='0,0,0',
-                             txpower=10)
+    info("*** Creating nodes\n")
 
-    ap2 = net.addAccessPoint('ap2', ssid="wifi2",
-                             mode="g", channel="6",
-                             position='50,0,0',
-                             txpower=10)
+    sta1 = net.addStation(
+        'sta1',
+        position='10,10,0'
+    )
 
-    h1 = net.addStation('h1', position='10,0,0')
-    h2 = net.addStation('h2', position='40,0,0')
+    ap1 = net.addAccessPoint(
+        'ap1',
+        ssid='sdn-wifi',
+        mode='g',
+        channel='1',
+        position='50,50,0',
+        txpower=14
+    )
 
     net.configureWifiNodes()
+
+    info("*** Starting network\n")
     net.build()
-    c1.start()
-    ap1.start([c1])
-    ap2.start([c1])
+    ap1.start([])
+
+    info("*** Monitoring RSSI & adjusting Tx Power\n")
+
+    for i in range(10):
+
+        rssi = sta1.params['rssi']
+        tx = ap1.params['txpower']
+
+        info(f"Iteration {i} | RSSI = {rssi} dBm | TxPower = {tx}\n")
+
+        if rssi < -70:
+            info("⚠ Weak signal → Increasing Tx Power\n")
+            ap1.setTxPower(tx + 2)
+
+        time.sleep(2)
 
     CLI(net)
     net.stop()
@@ -45,31 +61,3 @@ def topology():
 if __name__ == '__main__':
     setLogLevel('info')
     topology()
---------------------------
-sudo python3 topology.py
-h1 iw dev h1-wlan0 link
-الخطوة 14: إنشاء كود المتحكم
-nano ryu_rssi.py
----------------
-import time
-import os
-
-RSSI_THRESHOLD = -70
-TX_STEP = 5
-MAX_TX = 20
-
-while True:
-    rssi = int(os.popen(
-        "iw dev h1-wlan0 link | grep signal | awk '{print $2}'"
-    ).read())
-
-    if rssi < RSSI_THRESHOLD:
-        os.system("iw dev ap1-wlan0 set txpower fixed 1500")
-        print("تم رفع قدرة الإرسال")
-
-    time.sleep(5)
-
--------------
-ryu-manager ryu_rssi.py
-h1 setPosition 45,0,0
-h1 ping h2
