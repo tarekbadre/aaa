@@ -1,83 +1,56 @@
-#!/usr/bin/python3
-
-from mn_wifi.net import Mininet_wifi
-from mn_wifi.node import OVSKernelAP
-from mn_wifi.cli import CLI
-from mn_wifi.link import wmediumd
-from mn_wifi.wmediumdConnector import interference
-from mininet.log import setLogLevel, info
-import time
-
-# ====== إعدادات التحكم ======
-THRESHOLD = -70        # حد ضعف الإشارة
-TX_MIN = 5             # أقل TxPower
-TX_MAX = 20            # أعلى TxPower
-STEP = 3               # مقدار الزيادة/النقصان
-
-def topology():
-
-    net = Mininet_wifi(
-        controller=None,
-        accessPoint=OVSKernelAP,
-        link=wmediumd,
-        wmediumd_mode=interference
-    )
-
-    info("*** Creating nodes\n")
-
-    # جهاز متحرك
-    sta1 = net.addStation(
-        'sta1',
-        position='10,10,0'
-    )
-
-    # نقطة الوصول
-    ap1 = net.addAccessPoint(
-        'ap1',
-        ssid='sdn-wifi',
-        mode='g',
-        channel='1',
-        position='50,50,0',
-        txpower=14
-    )
-
-    net.configureWifiNodes()
-
-    # حركة الجهاز
-    net.startMobility(time=0)
-    net.mobility(sta1, 'start', time=1, position='10,10,0')
-    net.mobility(sta1, 'stop', time=20, position='90,90,0')
-    net.stopMobility(time=21)
-
-    info("*** Starting network\n")
-    net.build()
-    ap1.start([])
-
-    info("*** Monitoring RSSI & adapting Tx Power\n")
-
-    for i in range(10):
-
-        # قراءة RSSI الصحيحة
-        rssi = sta1.wintfs[0].rssi
-        tx = ap1.params['txpower']
-
-        info(f"[{i}] RSSI={rssi} dBm | TxPower={tx} dBm\n")
-
-        # إشارة ضعيفة → زود القدرة
-        if rssi < THRESHOLD and tx < TX_MAX:
-            info("⚠ Weak signal → Increasing Tx Power\n")
-            ap1.setTxPower(min(tx + STEP, TX_MAX))
-
-        # إشارة قوية → قلل القدرة
-        elif rssi > THRESHOLD + 10 and tx > TX_MIN:
-            info("✔ Strong signal → Decreasing Tx Power\n")
-            ap1.setTxPower(max(tx - STEP, TX_MIN))
-
-        time.sleep(2)
-
-    CLI(net)
-    net.stop()
-
-if __name__ == '__main__':
-    setLogLevel('info')
+mohaned@mohaned:~$ sudo python3 sdn_project.py
+[sudo] password for mohaned: 
+*** Creating nodes
+*** Connecting to wmediumd server /var/run/wmediumd.sock
+*** Starting network
+*** Monitoring RSSI & adapting Tx Power
+[0] RSSI=-67.0 dBm | TxPower=14 dBm
+[1] RSSI=-64.0 dBm | TxPower=14 dBm
+[2] RSSI=-59.0 dBm | TxPower=14 dBm
+✔ Strong signal → Decreasing Tx Power
+[3] RSSI=-54.0 dBm | TxPower=14 dBm
+✔ Strong signal → Decreasing Tx Power
+[4] RSSI=-27.0 dBm | TxPower=14 dBm
+✔ Strong signal → Decreasing Tx Power
+[5] RSSI=-49.0 dBm | TxPower=14 dBm
+✔ Strong signal → Decreasing Tx Power
+Exception in thread Thread-1 (configure):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/mobility.py", line 486, in configure
+    self.run(mob_nodes, draw, coordinate, dim, **kwargs)
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/mobility.py", line 528, in run
+    self.set_pos(node, pos)
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/mobility.py", line 68, in set_pos
+    node.set_pos_wmediumd(pos)
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/node.py", line 214, in set_pos_wmediumd
+    w_server.update_pos(w_pos(wmIface,
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/wmediumdConnector.py", line 719, in update_pos
+    ret = w_server.send_pos_update(pos)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/wmediumdConnector.py", line 848, in send_pos_update
+    return cls.__parse_response(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/wmediumdConnector.py", line 1171, in __parse_response
+    return resp_struct.unpack(recvd_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 21 bytes
+Traceback (most recent call last):
+  File "/home/mohaned/sdn_project.py", line 83, in <module>
     topology()
+  File "/home/mohaned/sdn_project.py", line 74, in topology
+    ap1.setTxPower(max(tx - STEP, TX_MIN))
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/node.py", line 179, in setTxPower
+    self.getNameToWintf(intf).setTxPower(txpower)
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/link.py", line 353, in setTxPower
+    self.setTXPowerWmediumd()
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/link.py", line 190, in setTXPowerWmediumd
+    w_server.update_txpower(w_txpower(self.wmIface, self.txpower))
+  File "/usr/local/lib/python3.12/dist-packages/mininet_wifi-2.7-py3.12.egg/mn_wifi/wmediumdConnector.py", line 735, in update_txpower
+    raise WmediumdException("Received error code from wmediumd: "
+mn_wifi.wmediumdConnector.WmediumdException: Received error code from wmediumd: code 66
+mohaned@mohaned:~$ 
+
