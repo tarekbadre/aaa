@@ -9,8 +9,7 @@ from mn_wifi.wmediumdConnector import interference
 from mininet.log import setLogLevel, info
 import time
 
-# ====== PARAMETERS ======
-THRESHOLD = -70       # dBm
+THRESHOLD = -70
 TX_MIN = 5
 TX_MAX = 20
 STEP = 3
@@ -48,23 +47,20 @@ def topology():
 
     info("*** Monitoring RSSI & adapting Tx Power\n")
 
-    x = 10  # initial position
+    x = 10
 
     for i in range(10):
 
-        # 🔹 Move station
         x += 8
         sta1.setPosition(f'{x},10,0')
 
         time.sleep(1)
 
-        # 🔹 Read RSSI safely
         rssi = sta1.params.get('rssi', -100)
         tx = ap1.params['txpower']
 
         info(f"[{i}] Position={x} | RSSI={rssi} dBm | TxPower={tx} dBm\n")
 
-        # 🔹 Decision logic
         if rssi < THRESHOLD and tx < TX_MAX:
             info("⚠ Weak signal → Increasing Tx Power\n")
             ap1.setTxPower(min(tx + STEP, TX_MAX))
