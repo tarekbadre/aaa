@@ -1,14 +1,80 @@
-mohaned@mohaned:~$ sudo python3 adaptive_power.py
-[sudo] password for mohaned: 
-*** Creating nodes
-*** Connecting to wmediumd server /var/run/wmediumd.sock
-*** Starting network
-*** Monitoring RSSI & adjusting Tx Power
-Traceback (most recent call last):
-  File "/home/mohaned/adaptive_power.py", line 63, in <module>
+#!/usr/bin/python3
+
+from mn_wifi.net import Mininet_wifi
+from mn_wifi.node import OVSKernelAP
+from mn_wifi.cli import CLI
+from mn_wifi.link import wmediumd
+from mn_wifi.wmediumdConnector import interference
+
+from mininet.log import setLogLevel, info
+import time
+
+
+def topology():
+
+    net = Mininet_wifi(
+        controller=None,
+        accessPoint=OVSKernelAP,
+        link=wmediumd,
+        wmediumd_mode=interference
+    )
+
+    info("*** Creating nodes\n")
+
+    # الجهاز (المستخدم)
+    sta1 = net.addStation(
+        'sta1',
+        position='60,60,0'
+    )
+
+    # نقطة الوصول
+    ap1 = net.addAccessPoint(
+        'ap1',
+        ssid='sdn-wifi',
+        mode='g',
+        channel='1',
+        position='10,10,0',
+        txpower=14
+    )
+
+    net.configureWifiNodes()
+    net.setPropagationModel(model="logDistance", exp=3)
+
+    info("*** Starting network\n")
+    net.build()
+    ap1.start([])
+
+    # ننتظر حتى يتم الاتصال
+    time.sleep(3)
+
+    info("*** Monitoring RSSI & adjusting Tx Power\n")
+
+    for i in range(10):
+
+        # قراءة RSSI الصحيحة
+        rssi = sta1.wintfs[0].rssi
+        tx = ap1.params['txpower']
+
+        if rssi == 0:
+            info(f"[{i}] Station not associated\n")
+            time.sleep(2)
+            continue
+
+        info(f"[{i}] RSSI = {rssi:.1f} dBm | TxPower = {tx} dBm\n")
+
+        # شرط التدخل
+        if rssi <= -70:
+            info("⚠ Weak signal → Increasing Tx Power\n")
+            new_tx = tx + 3
+            ap1.setTxPower(new_tx)
+            ap1.params['txpower'] = new_tx
+
+        time.sleep(2)
+
+    CLI(net)
+    net.stop()
+
+
+if __name__ == '__main__':
+    setLogLevel('info')
     topology()
-  File "/home/mohaned/adaptive_power.py", line 47, in topology
-    rssi = sta1.params['rssi']
-           ~~~~~~~~~~~^^^^^^^^
-KeyError: 'rssi'
-mohaned@mohaned:~$ 
