@@ -1,59 +1,39 @@
-from mn_wifi.net import Mininet_wifi
-from mn_wifi.node import OVSKernelAP
-from mn_wifi.cli import CLI
-from mn_wifi.link import wmediumd
-from mn_wifi.wmediumdConnector import interference
-from mininet.log import setLogLevel
+from ryu.base import app_manager
+from ryu.controller import ofp_event
+from ryu.controller.handler import MAIN_DISPATCHER, set_ev_cls
+from ryu.ofproto import ofproto_v1_3
+import time
 
-def topology():
-    net = Mininet_wifi(
-        controller=None,
-        accessPoint=OVSKernelAP,
-        link=wmediumd,
-        wmediumd_mode=interference
-    )
+class SignalMonitor(app_manager.RyuApp):
+    OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 
-    print("*** Creating nodes")
+    def __init__(self, *args, **kwargs):
+        super(SignalMonitor, self).__init__(*args, **kwargs)
+        self.last_state = "GOOD"
 
-    sta1 = net.addStation(
-        'sta1',
-        position='10,30,0'
-    )
+    def check_signal(self, rssi):
+        if rssi < -75:
+            if self.last_state != "LOST":
+                print("❌ تحذير: خرجت من نطاق الشبكة (Weak Signal)")
+                self.last_state = "LOST"
 
-    ap1 = net.addAccessPoint(
-        'ap1',
-        ssid='Network_1',
-        channel='1',
-        position='20,30,0',
-        range=30
-    )
+        elif rssi < -60:
+            if self.last_state != "WEAK":
+                print("⚠️ تنبيه: الإشارة ضعيفة")
+                self.last_state = "WEAK"
 
-    ap2 = net.addAccessPoint(
-        'ap2',
-        ssid='Network_2',
-        channel='6',
-        position='70,30,0',
-        range=30
-    )
+        else:
+            if self.last_state != "GOOD":
+                print("✅ الإشارة ممتازة – تم الرجوع للشبكة")
+                self.last_state = "GOOD"
 
-    print("*** Configuring wifi nodes")
-    net.configureWifiNodes()
+    @set_ev_cls(ofp_event.EventOFPSwitchFeatures, MAIN_DISPATCHER)
+    def switch_features_handler(self, ev):
+        print("📡 Controller connected to switch")
 
-    print("*** Plotting graph")
-    net.plotGraph(max_x=100, max_y=100)
+        # محاكاة RSSI (بدل Eventlet)
+        fake_rssi_values = [-50, -65, -80, -55]
 
-    print("*** Starting network")
-    net.start()
-
-    print("*** Starting mobility")
-    net.startMobility(time=0)
-    net.mobility(sta1, 'start', time=1, position='10,30,0')
-    net.mobility(sta1, 'stop', time=20, position='90,30,0')
-    net.stopMobility(time=21)
-
-    CLI(net)
-    net.stop()
-
-if __name__ == '__main__':
-    setLogLevel('info')
-    topology()
+        for rssi in fake_rssi_values:
+            self.check_signal(rssi)
+            time.sleep(2)
