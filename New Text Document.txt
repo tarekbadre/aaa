@@ -1,27 +1,134 @@
-الحل النهائي (نفّذه حرفيًا)
+(ryu-env310) mohaned@mohaned:~$ ryu-manager --version
+Traceback (most recent call last):
+  File "/home/mohaned/ryu-env310/bin/ryu-manager", line 5, in <module>
+    from ryu.cmd.manager import main
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/cmd/manager.py", line 22, in <module>
+    from ryu.lib import hub
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/lib/hub.py", line 30, in <module>
+    import eventlet
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/__init__.py", line 17, in <module>
+    from eventlet import convenience
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/convenience.py", line 7, in <module>
+    from eventlet.green import socket
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/green/socket.py", line 4, in <module>
+    __import__('eventlet.green._socket_nodns')
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/green/_socket_nodns.py", line 11, in <module>
+    from eventlet import greenio
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/greenio/__init__.py", line 3, in <module>
+    from eventlet.greenio.base import *  # noqa
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/greenio/base.py", line 32, in <module>
+    socket_timeout = eventlet.timeout.wrap_is_timeout(socket.timeout)
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/timeout.py", line 166, in wrap_is_timeout
+    base.is_timeout = property(lambda _: True)
+TypeError: cannot set 'is_timeout' attribute of immutable type 'TimeoutError'
+(ryu-env310) mohaned@mohaned:~$ ryu-manager mohaned_sdn.py
+Traceback (most recent call last):
+  File "/home/mohaned/ryu-env310/bin/ryu-manager", line 5, in <module>
+    from ryu.cmd.manager import main
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/cmd/manager.py", line 22, in <module>
+    from ryu.lib import hub
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/lib/hub.py", line 30, in <module>
+    import eventlet
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/__init__.py", line 17, in <module>
+    from eventlet import convenience
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/convenience.py", line 7, in <module>
+    from eventlet.green import socket
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/green/socket.py", line 4, in <module>
+    __import__('eventlet.green._socket_nodns')
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/green/_socket_nodns.py", line 11, in <module>
+    from eventlet import greenio
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/greenio/__init__.py", line 3, in <module>
+    from eventlet.greenio.base import *  # noqa
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/greenio/base.py", line 32, in <module>
+    socket_timeout = eventlet.timeout.wrap_is_timeout(socket.timeout)
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/timeout.py", line 166, in wrap_is_timeout
+    base.is_timeout = property(lambda _: True)
+TypeError: cannot set 'is_timeout' attribute of immutable type 'TimeoutError'
+(ryu-env310) mohaned@mohaned:~$ export EVENTLET_NO_GREENDNS=yes
+(ryu-env310) mohaned@mohaned:~$ export EVENTLET_DISABLE_TIMEOUTS=1
+(ryu-env310) mohaned@mohaned:~$ ryu-manager --version
+Traceback (most recent call last):
+  File "/home/mohaned/ryu-env310/bin/ryu-manager", line 5, in <module>
+    from ryu.cmd.manager import main
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/cmd/manager.py", line 22, in <module>
+    from ryu.lib import hub
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/lib/hub.py", line 30, in <module>
+    import eventlet
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/__init__.py", line 17, in <module>
+    from eventlet import convenience
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/convenience.py", line 7, in <module>
+    from eventlet.green import socket
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/green/socket.py", line 4, in <module>
+    __import__('eventlet.green._socket_nodns')
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/green/_socket_nodns.py", line 11, in <module>
+    from eventlet import greenio
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/greenio/__init__.py", line 3, in <module>
+    from eventlet.greenio.base import *  # noqa
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/greenio/base.py", line 32, in <module>
+    socket_timeout = eventlet.timeout.wrap_is_timeout(socket.timeout)
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/timeout.py", line 166, in wrap_is_timeout
+    base.is_timeout = property(lambda _: True)
+TypeError: cannot set 'is_timeout' attribute of immutable type 'TimeoutError'
+(ryu-env310) mohaned@mohaned:~$ source ryu-env310/bin/activate
+(ryu-env310) mohaned@mohaned:~$ pip uninstall -y eventlet dnspython
+Found existing installation: eventlet 0.31.1
+Uninstalling eventlet-0.31.1:
+  Successfully uninstalled eventlet-0.31.1
+Found existing installation: dnspython 1.16.0
+Uninstalling dnspython-1.16.0:
+  Successfully uninstalled dnspython-1.16.0
+(ryu-env310) mohaned@mohaned:~$ pip install eventlet==0.30.2 dnspython==1.16.0
+Collecting eventlet==0.30.2
+  Downloading eventlet-0.30.2-py2.py3-none-any.whl (224 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.2/224.2 kB 132.5 kB/s eta 0:00:00
+Collecting dnspython==1.16.0
+  Using cached dnspython-1.16.0-py2.py3-none-any.whl (188 kB)
+Requirement already satisfied: greenlet>=0.3 in ./ryu-env310/lib/python3.10/site-packages (from eventlet==0.30.2) (3.3.0)
+Requirement already satisfied: six>=1.10.0 in ./ryu-env310/lib/python3.10/site-packages (from eventlet==0.30.2) (1.17.0)
+Installing collected packages: dnspython, eventlet
+Successfully installed dnspython-1.16.0 eventlet-0.30.2
 
-⚠️ تأكد أنك داخل البيئة:
+[notice] A new release of pip available: 22.3.1 -> 25.3
+[notice] To update, run: pip install --upgrade pip
+(ryu-env310) mohaned@mohaned:~$ pip install greenlet==2.0.2
+Collecting greenlet==2.0.2
+  Downloading greenlet-2.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (613 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 613.7/613.7 kB 1.6 MB/s eta 0:00:00
+Installing collected packages: greenlet
+  Attempting uninstall: greenlet
+    Found existing installation: greenlet 3.3.0
+    Uninstalling greenlet-3.3.0:
+      Successfully uninstalled greenlet-3.3.0
+Successfully installed greenlet-2.0.2
 
-source ryu-env310/bin/activate
+[notice] A new release of pip available: 22.3.1 -> 25.3
+[notice] To update, run: pip install --upgrade pip
+(ryu-env310) mohaned@mohaned:~$ pip install greenlet==2.0.2
+Requirement already satisfied: greenlet==2.0.2 in ./ryu-env310/lib/python3.10/site-packages (2.0.2)
 
-1️⃣ إزالة eventlet و dnspython نهائيًا
-pip uninstall -y eventlet dnspython
-
-2️⃣ تثبيت الإصدارات المتوافقة فقط
-pip install eventlet==0.30.2 dnspython==1.16.0
-
-
-✔️ هذا هو المفتاح الحقيقي
-
-3️⃣ (اختياري لكن موصى به) تثبيت greenlet متوافق
-pip install greenlet==2.0.2
-
-4️⃣ الآن شغّل Ryu
-ryu-manager --version
-
-
-🔵 المفروض يطبع الإصدار بدون أي Error
-
-ثم:
-
-ryu-manager mohaned_sdn.py
+[notice] A new release of pip available: 22.3.1 -> 25.3
+[notice] To update, run: pip install --upgrade pip
+(ryu-env310) mohaned@mohaned:~$ ryu-manager --version
+Traceback (most recent call last):
+  File "/home/mohaned/ryu-env310/bin/ryu-manager", line 5, in <module>
+    from ryu.cmd.manager import main
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/cmd/manager.py", line 22, in <module>
+    from ryu.lib import hub
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/lib/hub.py", line 30, in <module>
+    import eventlet
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/__init__.py", line 17, in <module>
+    from eventlet import convenience
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/convenience.py", line 7, in <module>
+    from eventlet.green import socket
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/green/socket.py", line 4, in <module>
+    __import__('eventlet.green._socket_nodns')
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/green/_socket_nodns.py", line 11, in <module>
+    from eventlet import greenio
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/greenio/__init__.py", line 3, in <module>
+    from eventlet.greenio.base import *  # noqa
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/greenio/base.py", line 32, in <module>
+    socket_timeout = eventlet.timeout.wrap_is_timeout(socket.timeout)
+  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/timeout.py", line 166, in wrap_is_timeout
+    base.is_timeout = property(lambda _: True)
+TypeError: cannot set 'is_timeout' attribute of immutable type 'TimeoutError'
+(ryu-env310) mohaned@mohaned:~$ 
