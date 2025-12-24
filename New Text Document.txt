@@ -1,3 +1,6 @@
+
+ryu-manager --version
 sudo apt update
 sudo apt install -y python3-pip
 pip3 install ryu
+
