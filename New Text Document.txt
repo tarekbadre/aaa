@@ -1,57 +1,7 @@
-الخطوة 1: احذف البيئة القديمة (لو موجودة)
-deactivate 2>/dev/null
-rm -rf ryu-env
-
-🐍 الخطوة 2: تأكد إن Python 3.8 موجود
-python3.8 --version
-
-
-لو مش موجود:
-
-sudo apt update
-sudo apt install python3.8 python3.8-venv python3.8-dev -y
-
-🧪 الخطوة 3: إنشاء بيئة افتراضية جديدة (مهم)
-python3.8 -m venv ryu-env
-source ryu-env/bin/activate
-
-
-لو شفت:
-
-(ryu-env)
-
-
-✔ تمام
-
-📦 الخطوة 4: تثبيت إصدارات متوافقة (مهم جدًا)
-pip install --upgrade pip==22.3.1
-pip install setuptools==59.6.0 wheel
-
-🧠 الخطوة 5: تثبيت Ryu (الآن سينجح)
-pip install ryu
-
-
-لو انتهى بدون Error ✅
-يبقى كده تمام.
-
-🔍 الخطوة 6: تأكد إن ryu-manager موجود
-which ryu-manager
-
-
-المفروض يطلع شيء زي:
-
-/home/mohaned/ryu-env/bin/ryu-manager
-
-▶️ الخطوة 7: تشغيل الكنترولر (الطريقة الصح)
-
-❌ غلط
-
-sudo python3 ryu_signal_monitor.py
-
-
-✅ صح
-
-ryu-manager ryu_signal_monitor.py
-
-▶️ الخطوة 8: تشغيل الشبكة (في Terminal تاني)
-sudo python3 wifi_topology.py
+mohaned@mohaned:~/wifi_sdn_project$ sudo python3 ryu_signal_monitor.py
+[sudo] password for mohaned: 
+Traceback (most recent call last):
+  File "/home/mohaned/wifi_sdn_project/ryu_signal_monitor.py", line 1, in <module>
+    from ryu.base import app_manager
+ModuleNotFoundError: No module named 'ryu'
+mohaned@mohaned:~/wifi_sdn_project$ 
