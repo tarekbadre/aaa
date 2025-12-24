@@ -1,80 +1,20 @@
-mohaned@mohaned:~/wifi_sdn_project$ source ~/ryu-env/bin/activate
-(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ ryu-manager ryu_signal_monitor.py
-Traceback (most recent call last):
-  File "/home/mohaned/ryu-env/bin/ryu-manager", line 5, in <module>
-    from ryu.cmd.manager import main
-  File "/home/mohaned/ryu-env/lib/python3.8/site-packages/ryu/cmd/manager.py", line 33, in <module>
-    from ryu.app import wsgi
-  File "/home/mohaned/ryu-env/lib/python3.8/site-packages/ryu/app/wsgi.py", line 109, in <module>
-    class _AlreadyHandledResponse(Response):
-  File "/home/mohaned/ryu-env/lib/python3.8/site-packages/ryu/app/wsgi.py", line 111, in _AlreadyHandledResponse
-    from eventlet.wsgi import ALREADY_HANDLED
-ImportError: cannot import name 'ALREADY_HANDLED' from 'eventlet.wsgi' (/home/mohaned/ryu-env/lib/python3.8/site-packages/eventlet/wsgi.py)
-(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ sudo ~/ryu-env/bin/ryu-manager ryu_signal_monitor.py
-Traceback (most recent call last):
-  File "/home/mohaned/ryu-env/bin/ryu-manager", line 5, in <module>
-    from ryu.cmd.manager import main
-  File "/home/mohaned/ryu-env/lib/python3.8/site-packages/ryu/cmd/manager.py", line 33, in <module>
-    from ryu.app import wsgi
-  File "/home/mohaned/ryu-env/lib/python3.8/site-packages/ryu/app/wsgi.py", line 109, in <module>
-    class _AlreadyHandledResponse(Response):
-  File "/home/mohaned/ryu-env/lib/python3.8/site-packages/ryu/app/wsgi.py", line 111, in _AlreadyHandledResponse
-    from eventlet.wsgi import ALREADY_HANDLED
-ImportError: cannot import name 'ALREADY_HANDLED' from 'eventlet.wsgi' (/home/mohaned/ryu-env/lib/python3.8/site-packages/eventlet/wsgi.py)
-(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ source ~/ryu-env/bin/activate
-(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ pip uninstall -y eventlet
-Found existing installation: eventlet 0.39.1
-Uninstalling eventlet-0.39.1:
-  Successfully uninstalled eventlet-0.39.1
-(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ pip install eventlet==0.30.2
-Collecting eventlet==0.30.2
-  Using cached eventlet-0.30.2-py2.py3-none-any.whl (224 kB)
-Requirement already satisfied: six>=1.10.0 in /home/mohaned/ryu-env/lib/python3.8/site-packages (from eventlet==0.30.2) (1.17.0)
-Requirement already satisfied: greenlet>=0.3 in /home/mohaned/ryu-env/lib/python3.8/site-packages (from eventlet==0.30.2) (3.1.1)
-Collecting dnspython<2.0.0,>=1.15.0
-  Using cached dnspython-1.16.0-py2.py3-none-any.whl (188 kB)
-Installing collected packages: dnspython, eventlet
-  Attempting uninstall: dnspython
-    Found existing installation: dnspython 2.6.1
-    Uninstalling dnspython-2.6.1:
-      Successfully uninstalled dnspython-2.6.1
-Successfully installed dnspython-1.16.0 eventlet-0.30.2
-WARNING: There was an error checking the latest version of pip.
-(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ pip uninstall -y dnspython
-Found existing installation: dnspython 1.16.0
-Uninstalling dnspython-1.16.0:
-  Successfully uninstalled dnspython-1.16.0
-(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ pip install dnspython==1.16.0
-Collecting dnspython==1.16.0
-  Using cached dnspython-1.16.0-py2.py3-none-any.whl (188 kB)
-Installing collected packages: dnspython
-Successfully installed dnspython-1.16.0
-WARNING: There was an error checking the latest version of pip.
-(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ pip show eventlet dnspython
-Name: eventlet
-Version: 0.30.2
-Summary: Highly concurrent networking library
-Home-page: http://eventlet.net
-Author: Linden Lab
-Author-email: eventletdev@lists.secondlife.com
-License: UNKNOWN
-Location: /home/mohaned/ryu-env/lib/python3.8/site-packages
-Requires: dnspython, greenlet, six
-Required-by: ryu
----
-Name: dnspython
-Version: 1.16.0
-Summary: DNS toolkit
-Home-page: http://www.dnspython.org
-Author: Bob Halley
-Author-email: halley@dnspython.org
-License: BSD-like
-Location: /home/mohaned/ryu-env/lib/python3.8/site-packages
-Requires: 
-Required-by: eventlet
+(ryu-env) mohaned@mohaned:~/wifi_sdn_project$ sudo python3 wifi_topology.py
+*** Creating nodes
+*** Configuring wifi nodes
+*** ap1-wlan1: minimum tx power (1 dBm) yields 30.00m for requested 30.00m (delta +0.00m)
+*** ap2-wlan1: minimum tx power (1 dBm) yields 30.00m for requested 30.00m (delta +0.00m)
+*** Connecting to wmediumd server /var/run/wmediumd.sock
+*** Plotting graph
+*** Starting network
+*** Starting controller(s)
+*** Starting L2 nodes
+ap1 ap2 ...
+*** Starting mobility
+*** Starting CLI:
+mininet-wifi> 
+-----------------------------------
 (ryu-env) mohaned@mohaned:~/wifi_sdn_project$ ryu-manager ryu_signal_monitor.py
 loading app ryu_signal_monitor.py
 loading app ryu.controller.ofp_handler
 instantiating app ryu_signal_monitor.py of SignalMonitor
 instantiating app ryu.controller.ofp_handler of OFPHandler
-
