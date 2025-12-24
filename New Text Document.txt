@@ -1,40 +1,77 @@
-الحل الأفضل (الموصى به): Virtual Environment 🔥
-1️⃣ ثبّت الأدوات اللازمة
-sudo apt install -y python3-venv python3-full
-
-2️⃣ أنشئ بيئة افتراضية
-
-في مجلد البيت:
-
-python3 -m venv ryu-env
-
-3️⃣ فعّل البيئة
-source ryu-env/bin/activate
-
-
-ستلاحظ أن الطرفية أصبحت هكذا:
-
-(ryu-env) mohaned@mohaned:~$
-
-4️⃣ ثبّت Ryu داخل البيئة
-pip install ryu
-
-
-وتأكد:
-
-ryu-manager --version
-
-5️⃣ شغّل تطبيقك
-
-⚠️ لا تستخدم sudo داخل الـ venv
-
-ryu-manager mohaned_sdn.py
-
-🧪 تشغيل Mininet (في نافذة أخرى)
-
-Mininet يحتاج sudo:
-
-sudo mn --topo single,3 --mac --switch ovsk --controller remote
-
-❌ حلول غير مفضلة (لا أنصح بها)
-pip3 install ryu --break-system-packages
+mohaned@mohaned:~$ sudo apt install -y python3-venv python3-full
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+python3-venv is already the newest version (3.12.3-0ubuntu2.1).
+python3-full is already the newest version (3.12.3-0ubuntu2.1).
+0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.
+mohaned@mohaned:~$ python3 -m venv ryu-env
+mohaned@mohaned:~$ source ryu-env/bin/activate
+(ryu-env) mohaned@mohaned:~$ pip install ryu
+Requirement already satisfied: ryu in ./ryu-env/lib/python3.10/site-packages (4.34)
+Collecting eventlet==0.31.1 (from ryu)
+  Obtaining dependency information for eventlet==0.31.1 from https://files.pythonhosted.org/packages/72/ff/28cffe7b4ee3b1823db5a1186521e48b898dffade680405c690915e5ce8f/eventlet-0.31.1-py2.py3-none-any.whl.metadata
+  Using cached eventlet-0.31.1-py2.py3-none-any.whl.metadata (4.3 kB)
+Requirement already satisfied: msgpack>=0.4.0 in ./ryu-env/lib/python3.10/site-packages (from ryu) (1.1.2)
+Requirement already satisfied: netaddr in ./ryu-env/lib/python3.10/site-packages (from ryu) (1.3.0)
+Requirement already satisfied: oslo.config>=2.5.0 in ./ryu-env/lib/python3.10/site-packages (from ryu) (10.1.0)
+Requirement already satisfied: ovs>=2.6.0 in ./ryu-env/lib/python3.10/site-packages (from ryu) (3.6.1)
+Requirement already satisfied: packaging==20.9 in ./ryu-env/lib/python3.10/site-packages (from ryu) (20.9)
+Requirement already satisfied: routes in ./ryu-env/lib/python3.10/site-packages (from ryu) (2.5.1)
+Requirement already satisfied: six>=1.4.0 in ./ryu-env/lib/python3.10/site-packages (from ryu) (1.17.0)
+Requirement already satisfied: tinyrpc==1.0.4 in ./ryu-env/lib/python3.10/site-packages (from ryu) (1.0.4)
+Requirement already satisfied: webob>=1.2 in ./ryu-env/lib/python3.10/site-packages (from ryu) (1.8.9)
+Collecting dnspython<2.0.0,>=1.15.0 (from eventlet==0.31.1->ryu)
+  Obtaining dependency information for dnspython<2.0.0,>=1.15.0 from https://files.pythonhosted.org/packages/ec/d3/3aa0e7213ef72b8585747aa0e271a9523e713813b9a20177ebe1e939deb0/dnspython-1.16.0-py2.py3-none-any.whl.metadata
+  Using cached dnspython-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+Requirement already satisfied: greenlet>=0.3 in ./ryu-env/lib/python3.10/site-packages (from eventlet==0.31.1->ryu) (3.3.0)
+Requirement already satisfied: pyparsing>=2.0.2 in ./ryu-env/lib/python3.10/site-packages (from packaging==20.9->ryu) (3.2.5)
+Requirement already satisfied: stevedore>=1.20.0 in ./ryu-env/lib/python3.10/site-packages (from oslo.config>=2.5.0->ryu) (5.6.0)
+Requirement already satisfied: oslo.i18n>=3.15.3 in ./ryu-env/lib/python3.10/site-packages (from oslo.config>=2.5.0->ryu) (6.7.1)
+Requirement already satisfied: rfc3986>=1.2.0 in ./ryu-env/lib/python3.10/site-packages (from oslo.config>=2.5.0->ryu) (2.0.0)
+Requirement already satisfied: PyYAML>=5.1 in ./ryu-env/lib/python3.10/site-packages (from oslo.config>=2.5.0->ryu) (6.0.3)
+Requirement already satisfied: requests>=2.18.0 in ./ryu-env/lib/python3.10/site-packages (from oslo.config>=2.5.0->ryu) (2.32.5)
+Requirement already satisfied: sortedcontainers in ./ryu-env/lib/python3.10/site-packages (from ovs>=2.6.0->ryu) (2.4.0)
+Requirement already satisfied: repoze.lru>=0.3 in ./ryu-env/lib/python3.10/site-packages (from routes->ryu) (0.7)
+Requirement already satisfied: pbr>=2.0.0 in ./ryu-env/lib/python3.10/site-packages (from oslo.i18n>=3.15.3->oslo.config>=2.5.0->ryu) (5.11.1)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./ryu-env/lib/python3.10/site-packages (from requests>=2.18.0->oslo.config>=2.5.0->ryu) (3.4.4)
+Requirement already satisfied: idna<4,>=2.5 in ./ryu-env/lib/python3.10/site-packages (from requests>=2.18.0->oslo.config>=2.5.0->ryu) (3.11)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./ryu-env/lib/python3.10/site-packages (from requests>=2.18.0->oslo.config>=2.5.0->ryu) (2.6.2)
+Requirement already satisfied: certifi>=2017.4.17 in ./ryu-env/lib/python3.10/site-packages (from requests>=2.18.0->oslo.config>=2.5.0->ryu) (2025.11.12)
+Using cached eventlet-0.31.1-py2.py3-none-any.whl (224 kB)
+Using cached dnspython-1.16.0-py2.py3-none-any.whl (188 kB)
+Installing collected packages: dnspython, eventlet
+  Attempting uninstall: dnspython
+    Found existing installation: dnspython 2.2.1
+    Uninstalling dnspython-2.2.1:
+      Successfully uninstalled dnspython-2.2.1
+  Attempting uninstall: eventlet
+    Found existing installation: eventlet 0.33.3
+    Uninstalling eventlet-0.33.3:
+      Successfully uninstalled eventlet-0.33.3
+Successfully installed dnspython-1.16.0 eventlet-0.31.1
+WARNING: There was an error checking the latest version of pip.
+(ryu-env) mohaned@mohaned:~$ ryu-manager --version
+Traceback (most recent call last):
+  File "/home/mohaned/ryu-env/bin/ryu-manager", line 5, in <module>
+    from ryu.cmd.manager import main
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/ryu/cmd/manager.py", line 22, in <module>
+    from ryu.lib import hub
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/ryu/lib/hub.py", line 30, in <module>
+    import eventlet
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/__init__.py", line 17, in <module>
+    from eventlet import convenience
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/convenience.py", line 7, in <module>
+    from eventlet.green import socket
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/green/socket.py", line 4, in <module>
+    __import__('eventlet.green._socket_nodns')
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/green/_socket_nodns.py", line 11, in <module>
+    from eventlet import greenio
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/greenio/__init__.py", line 3, in <module>
+    from eventlet.greenio.base import *  # noqa
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/greenio/base.py", line 32, in <module>
+    socket_timeout = eventlet.timeout.wrap_is_timeout(socket.timeout)
+  File "/home/mohaned/ryu-env/lib/python3.10/site-packages/eventlet/timeout.py", line 166, in wrap_is_timeout
+    base.is_timeout = property(lambda _: True)
+TypeError: cannot set 'is_timeout' attribute of immutable type 'TimeoutError'
+(ryu-env) mohaned@mohaned:~$ 
