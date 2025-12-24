@@ -1,39 +1,5 @@
-from ryu.base import app_manager
-from ryu.controller import ofp_event
-from ryu.controller.handler import MAIN_DISPATCHER, set_ev_cls
-from ryu.ofproto import ofproto_v1_3
-import time
+1 – تشغيل Mininet-WiFi
+sudo python3 wifi_topology.py
 
-class SignalMonitor(app_manager.RyuApp):
-    OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
-
-    def __init__(self, *args, **kwargs):
-        super(SignalMonitor, self).__init__(*args, **kwargs)
-        self.last_state = "GOOD"
-
-    def check_signal(self, rssi):
-        if rssi < -75:
-            if self.last_state != "LOST":
-                print("❌ تحذير: خرجت من نطاق الشبكة (Weak Signal)")
-                self.last_state = "LOST"
-
-        elif rssi < -60:
-            if self.last_state != "WEAK":
-                print("⚠️ تنبيه: الإشارة ضعيفة")
-                self.last_state = "WEAK"
-
-        else:
-            if self.last_state != "GOOD":
-                print("✅ الإشارة ممتازة – تم الرجوع للشبكة")
-                self.last_state = "GOOD"
-
-    @set_ev_cls(ofp_event.EventOFPSwitchFeatures, MAIN_DISPATCHER)
-    def switch_features_handler(self, ev):
-        print("📡 Controller connected to switch")
-
-        # محاكاة RSSI (بدل Eventlet)
-        fake_rssi_values = [-50, -65, -80, -55]
-
-        for rssi in fake_rssi_values:
-            self.check_signal(rssi)
-            time.sleep(2)
+Terminal 2 – تشغيل Ryu
+ryu-manager ryu_signal_monitor.py
