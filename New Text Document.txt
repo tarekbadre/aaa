@@ -1,103 +1,19 @@
-(ryu-env310) mohaned@mohaned:~$ source ryu-env310/bin/activate
-(ryu-env310) mohaned@mohaned:~$ pip install "pip<23" "setuptools<65" wheel
-Collecting pip<23
-  Downloading pip-22.3.1-py3-none-any.whl.metadata (4.1 kB)
-Collecting setuptools<65
-  Downloading setuptools-64.0.3-py3-none-any.whl.metadata (6.2 kB)
-Collecting wheel
-  Using cached wheel-0.45.1-py3-none-any.whl.metadata (2.3 kB)
-Downloading pip-22.3.1-py3-none-any.whl (2.1 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 1.5 MB/s  0:00:01
-Downloading setuptools-64.0.3-py3-none-any.whl (1.2 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 1.2 MB/s  0:00:01
-Using cached wheel-0.45.1-py3-none-any.whl (72 kB)
-Installing collected packages: wheel, setuptools, pip
-  Attempting uninstall: setuptools
-    Found existing installation: setuptools 79.0.1
-    Uninstalling setuptools-79.0.1:
-      Successfully uninstalled setuptools-79.0.1
-  Attempting uninstall: pip
-    Found existing installation: pip 25.3
-    Uninstalling pip-25.3:
-      Successfully uninstalled pip-25.3
-Successfully installed pip-22.3.1 setuptools-64.0.3 wheel-0.45.1
-(ryu-env310) mohaned@mohaned:~$ pip --version
-pip 22.3.1 from /home/mohaned/ryu-env310/lib/python3.10/site-packages/pip (python 3.10)
-(ryu-env310) mohaned@mohaned:~$ pip install ryu==4.34 --no-build-isolation
-Collecting ryu==4.34
-  Using cached ryu-4.34.tar.gz (1.1 MB)
-  Preparing metadata (setup.py) ... done
-Collecting eventlet!=0.18.3,!=0.20.1,!=0.21.0,!=0.23.0,>=0.18.2
-  Using cached eventlet-0.40.4-py3-none-any.whl (364 kB)
-Collecting msgpack>=0.3.0
-  Using cached msgpack-1.1.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (406 kB)
-Collecting netaddr
-  Using cached netaddr-1.3.0-py3-none-any.whl (2.3 MB)
-Collecting oslo.config>=2.5.0
-  Using cached oslo_config-10.1.0-py3-none-any.whl (131 kB)
-Collecting ovs>=2.6.0
-  Using cached ovs-3.6.1.tar.gz (161 kB)
-  Preparing metadata (setup.py) ... done
-Collecting routes
-  Using cached Routes-2.5.1-py2.py3-none-any.whl (40 kB)
-Collecting six>=1.4.0
-  Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
-Collecting tinyrpc
-  Using cached tinyrpc-1.1.7-py3-none-any.whl (52 kB)
-Collecting webob>=1.2
-  Using cached WebOb-1.8.9-py2.py3-none-any.whl (115 kB)
-Collecting greenlet>=1.0
-  Using cached greenlet-3.3.0-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (586 kB)
-Collecting dnspython>=1.15.0
-  Downloading dnspython-2.8.0-py3-none-any.whl (331 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 331.1/331.1 kB 915.3 kB/s eta 0:00:00
-Collecting PyYAML>=5.1
-  Using cached pyyaml-6.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (770 kB)
-Collecting requests>=2.18.0
-  Using cached requests-2.32.5-py3-none-any.whl (64 kB)
-Collecting oslo.i18n>=3.15.3
-  Using cached oslo_i18n-6.7.1-py3-none-any.whl (47 kB)
-Collecting rfc3986>=1.2.0
-  Using cached rfc3986-2.0.0-py2.py3-none-any.whl (31 kB)
-Collecting stevedore>=1.20.0
-  Using cached stevedore-5.6.0-py3-none-any.whl (54 kB)
-Collecting sortedcontainers
-  Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
-Collecting repoze.lru>=0.3
-  Using cached repoze.lru-0.7-py3-none-any.whl (10 kB)
-Collecting pbr>=2.0.0
-  Using cached pbr-7.0.3-py2.py3-none-any.whl (131 kB)
-Collecting urllib3<3,>=1.21.1
-  Using cached urllib3-2.6.2-py3-none-any.whl (131 kB)
-Collecting certifi>=2017.4.17
-  Using cached certifi-2025.11.12-py3-none-any.whl (159 kB)
-Collecting charset_normalizer<4,>=2
-  Using cached charset_normalizer-3.4.4-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (153 kB)
-Collecting idna<4,>=2.5
-  Using cached idna-3.11-py3-none-any.whl (71 kB)
-Requirement already satisfied: setuptools in ./ryu-env310/lib/python3.10/site-packages (from pbr>=2.0.0->oslo.i18n>=3.15.3->oslo.config>=2.5.0->ryu==4.34) (64.0.3)
-Building wheels for collected packages: ryu, ovs
-  Building wheel for ryu (setup.py) ... done
-  Created wheel for ryu: filename=ryu-4.34-py3-none-any.whl size=1315595 sha256=1ab54e0ca492b056b57ccaf2c8bd21c96082767bce367787ae71eec954e37c11
-  Stored in directory: /home/mohaned/.cache/pip/wheels/0c/f4/ee/c8316fa17866b2bde49636649bb1d1f5fcac151b531678f9f4
-  Building wheel for ovs (setup.py) ... done
-  Created wheel for ovs: filename=ovs-3.6.1-py3-none-any.whl size=190586 sha256=acb272a98e81ca29979e735fb405d33c61555a0e4c8aee2a47b8fff6a7920d26
-  Stored in directory: /home/mohaned/.cache/pip/wheels/98/ff/7d/01b99f728073710ce3eb0b9d734ab34dc9ffce9a3bc1ec2e45
-Successfully built ryu ovs
-Installing collected packages: tinyrpc, sortedcontainers, repoze.lru, webob, urllib3, stevedore, six, rfc3986, PyYAML, pbr, ovs, netaddr, msgpack, idna, greenlet, dnspython, charset_normalizer, certifi, routes, requests, oslo.i18n, eventlet, oslo.config, ryu
-Successfully installed PyYAML-6.0.3 certifi-2025.11.12 charset_normalizer-3.4.4 dnspython-2.8.0 eventlet-0.40.4 greenlet-3.3.0 idna-3.11 msgpack-1.1.2 netaddr-1.3.0 oslo.config-10.1.0 oslo.i18n-6.7.1 ovs-3.6.1 pbr-7.0.3 repoze.lru-0.7 requests-2.32.5 rfc3986-2.0.0 routes-2.5.1 ryu-4.34 six-1.17.0 sortedcontainers-2.4.0 stevedore-5.6.0 tinyrpc-1.1.7 urllib3-2.6.2 webob-1.8.9
+الحل النهائي (سطرين فقط 🔥)
+🟢 الحل: تثبيت eventlet متوافق يدويًا
+1️⃣ وأنت داخل البيئة (ryu-env310) نفّذ:
+pip uninstall -y eventlet
 
-[notice] A new release of pip available: 22.3.1 -> 25.3
-[notice] To update, run: pip install --upgrade pip
-(ryu-env310) mohaned@mohaned:~$ ryu-manager --version
-Traceback (most recent call last):
-  File "/home/mohaned/ryu-env310/bin/ryu-manager", line 5, in <module>
-    from ryu.cmd.manager import main
-  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/cmd/manager.py", line 33, in <module>
-    from ryu.app import wsgi
-  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/app/wsgi.py", line 109, in <module>
-    class _AlreadyHandledResponse(Response):
-  File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/ryu/app/wsgi.py", line 111, in _AlreadyHandledResponse
-    from eventlet.wsgi import ALREADY_HANDLED
-ImportError: cannot import name 'ALREADY_HANDLED' from 'eventlet.wsgi' (/home/mohaned/ryu-env310/lib/python3.10/site-packages/eventlet/wsgi.py)
-(ryu-env310) mohaned@mohaned:~$ 
+2️⃣ ثبّت الإصدار المتوافق مع Ryu:
+pip install eventlet==0.31.1
+
+
+✅ هذا الإصدار مجرّب + مستقر مع Ryu 4.34
+
+3️⃣ جرّب Ryu الآن:
+ryu-manager --version
+
+
+🔵 يجب أن يعمل بدون أي Error
+
+▶️ بعد نجاحه شغّل تطبيقك
+ryu-manager mohaned_sdn.py
