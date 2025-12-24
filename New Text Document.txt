@@ -1,5 +1,13 @@
-1 – تشغيل Mininet-WiFi
-sudo python3 wifi_topology.py
+mohaned@mohaned:~/wifi_sdn_project$ ryu-manager ryu_signal_monitor.py
+ryu-manager: command not found
+mohaned@mohaned:~/wifi_sdn_project$ ls
+mn7707_ap1-wlan1.apconf  ryu_signal_monitor.py
+mn7707_ap2-wlan1.apconf  wifi_topology.py
+mohaned@mohaned:~/wifi_sdn_project$ sudo python3 ryu_signal_monitor.py
+[sudo] password for mohaned: 
+Traceback (most recent call last):
+  File "/home/mohaned/wifi_sdn_project/ryu_signal_monitor.py", line 1, in <module>
+    from ryu.base import app_manager
+ModuleNotFoundError: No module named 'ryu'
+mohaned@mohaned:~/wifi_sdn_project$ 
 
-Terminal 2 – تشغيل Ryu
-ryu-manager ryu_signal_monitor.py
