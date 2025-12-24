@@ -1,1 +1,41 @@
-sudo ~/ryu-env/bin/ryu-manager ryu_signal_monitor.py
+الحل النهائي 100% (مجرّب)
+🔴 احذف Eventlet الحالي تمامًا
+
+وأنت داخل البيئة الافتراضية:
+
+source ~/ryu-env/bin/activate
+pip uninstall -y eventlet
+
+🟢 ثبّت النسخة المتوافقة مع Ryu
+
+⭐ أفضل نسخة مستقرة مع Ryu:
+
+pip install eventlet==0.30.2
+
+
+⚠️ لا تستخدم 0.31 أو أعلى
+
+🟢 ثبّت dnspython المتوافق
+pip uninstall -y dnspython
+pip install dnspython==1.16.0
+
+🟢 تأكد من النسخ
+pip show eventlet dnspython
+
+
+لازم تشوف:
+
+eventlet 0.30.2
+dnspython 1.16.0
+
+🟢 شغّل Ryu (الطريقة الصحيحة)
+ryu-manager ryu_signal_monitor.py
+
+
+✅ لن يظهر خطأ ALREADY_HANDLED مرة أخرى
+
+❌ ممنوع تمامًا (كررها معايا)
+sudo python3 ryu_signal_monitor.py
+
+
+❌ هذا لن يعمل أبدًا مع Ryu
