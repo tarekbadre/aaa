@@ -1,32 +1,38 @@
-الخطوات (انسخ نفّذ بالترتيب)
-1️⃣ ثبّت Python 3.10
-sudo apt install -y python3.10 python3.10-venv python3.10-dev
-
-
-تحقق:
-
-python3.10 --version
-
-2️⃣ أنشئ venv باستخدام Python 3.10
-python3.10 -m venv ryu-env310
-
-3️⃣ فعّل البيئة
-source ryu-env310/bin/activate
-
-
-سيظهر:
-
-(ryu-env310) mohaned@mohaned:~$
-
-4️⃣ ثبّت Ryu (بدون مشاكل)
-pip install --upgrade pip
-pip install ryu
-
-5️⃣ اختبر Ryu
-ryu-manager --version
-
-
-✅ المفروض يشتغل بدون أي Error
-
-6️⃣ شغّل تطبيقك
-ryu-manager mohaned_sdn.py
+(ryu-env310) mohaned@mohaned:~$ pip install ryu
+Collecting ryu
+  Using cached ryu-4.34.tar.gz (1.1 MB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... error
+  error: subprocess-exited-with-error
+  
+  × Getting requirements to build wheel did not run successfully.
+  │ exit code: 1
+  ╰─> [21 lines of output]
+      Traceback (most recent call last):
+        File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 389, in <module>
+          main()
+        File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 373, in main
+          json_out["return_val"] = hook(**hook_input["kwargs"])
+        File "/home/mohaned/ryu-env310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 143, in get_requires_for_build_wheel
+          return hook(config_settings)
+        File "/tmp/pip-build-env-5cdn4cvz/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 331, in get_requires_for_build_wheel
+          return self._get_build_requires(config_settings, requirements=[])
+        File "/tmp/pip-build-env-5cdn4cvz/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 301, in _get_build_requires
+          self.run_setup()
+        File "/tmp/pip-build-env-5cdn4cvz/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 512, in run_setup
+          super().run_setup(setup_script=setup_script)
+        File "/tmp/pip-build-env-5cdn4cvz/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 317, in run_setup
+          exec(code, locals())
+        File "<string>", line 27, in <module>
+        File "/tmp/pip-install-1ou1mhjq/ryu_dcb09cbf1da040ddb1b883a655181f68/ryu/hooks.py", line 36, in save_orig
+          _main_module()._orig_get_script_args = easy_install.get_script_args
+        File "/tmp/pip-build-env-5cdn4cvz/overlay/lib/python3.10/site-packages/setuptools/command/easy_install.py", line 15, in __getattr__
+          attr = getattr(
+      AttributeError: 'types.SimpleNamespace' object has no attribute 'get_script_args'
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+ERROR: Failed to build 'ryu' when getting requirements to build wheel
+(ryu-env310) mohaned@mohaned:~$ ryu-manager --version
+ryu-manager: command not found
+(ryu-env310) mohaned@mohaned:~$ 
