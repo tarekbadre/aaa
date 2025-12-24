@@ -1,79 +1,64 @@
-#!/usr/bin/python3
+from ryu.base import app_manager from ryu.controller import ofp_event from ryu.controller.handler import MAIN_DISPATCHER, CONFIG_DISPATCHER, set_ev_cls from ryu.ofproto import ofproto_v1_3 from ryu.lib.packet import packet from ryu.lib.packet import ethernet
 
-from mn_wifi.net import Mininet_wifi
-from mn_wifi.node import OVSKernelAP
-from mn_wifi.cli import CLI
-from mn_wifi.link import wmediumd
-from mn_wifi.wmediumdConnector import interference
+class SimpleSwitch13(app_manager.RyuApp): OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 
-from mininet.log import setLogLevel, info
-import time
+def __init__(self, *args, **kwargs):
+    super(SimpleSwitch13, self).__init__(*args, **kwargs)
+    self.mac_to_port = {}
 
-THRESHOLD = -70
-TX_MIN = 5
-TX_MAX = 20
-STEP = 3
+@set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
+def switch_features_handler(self, ev):
+    datapath = ev.msg.datapath
+    ofproto = datapath.ofproto
+    parser = datapath.ofproto_parser
 
-def topology():
+    match = parser.OFPMatch()
+    actions = [parser.OFPActionOutput(ofproto.OFPP_CONTROLLER,
+                                      ofproto.OFPCML_NO_BUFFER)]
+    self.add_flow(datapath, 0, match, actions)
 
-    net = Mininet_wifi(
-        controller=None,
-        accessPoint=OVSKernelAP,
-        link=wmediumd,
-        wmediumd_mode=interference
-    )
+def add_flow(self, datapath, priority, match, actions):
+    ofproto = datapath.ofproto
+    parser = datapath.ofproto_parser
 
-    info("*** Creating nodes\n")
+    inst = [parser.OFPInstructionActions(ofproto.OFPIT_APPLY_ACTIONS,
+                                         actions)]
+    mod = parser.OFPFlowMod(datapath=datapath, priority=priority,
+                            match=match, instructions=inst)
+    datapath.send_msg(mod)
 
-    sta1 = net.addStation(
-        'sta1',
-        position='10,10,0'
-    )
+@set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+def _packet_in_handler(self, ev):
+    msg = ev.msg
+    datapath = msg.datapath
+    ofproto = datapath.ofproto
+    parser = datapath.ofproto_parser
+    in_port = msg.match['in_port']
 
-    ap1 = net.addAccessPoint(
-        'ap1',
-        ssid='sdn-wifi',
-        mode='g',
-        channel='1',
-        position='50,50,0',
-        txpower=14
-    )
+    pkt = packet.Packet(msg.data)
+    eth = pkt.get_protocols(ethernet.ethernet)[0]
 
-    net.configureWifiNodes()
+    dst = eth.dst
+    src = eth.src
 
-    info("*** Starting network\n")
-    net.build()
-    ap1.start([])
+    dpid = datapath.id
+    self.mac_to_port.setdefault(dpid, {})
+    self.mac_to_port[dpid][src] = in_port
 
-    info("*** Monitoring RSSI & adapting Tx Power\n")
+    if dst in self.mac_to_port[dpid]:
+        out_port = self.mac_to_port[dpid][dst]
+    else:
+        out_port = ofproto.OFPP_FLOOD
 
-    x = 10
+    actions = [parser.OFPActionOutput(out_port)]
+    match = parser.OFPMatch(in_port=in_port, eth_dst=dst)
 
-    for i in range(10):
+    if out_port != ofproto.OFPP_FLOOD:
+        self.add_flow(datapath, 1, match, actions)
 
-        x += 8
-        sta1.setPosition(f'{x},10,0')
-
-        time.sleep(1)
-
-        rssi = sta1.params.get('rssi', -100)
-        tx = ap1.params['txpower']
-
-        info(f"[{i}] Position={x} | RSSI={rssi} dBm | TxPower={tx} dBm\n")
-
-        if rssi < THRESHOLD and tx < TX_MAX:
-            info("⚠ Weak signal → Increasing Tx Power\n")
-            ap1.setTxPower(min(tx + STEP, TX_MAX))
-
-        elif rssi > (THRESHOLD + 10) and tx > TX_MIN:
-            info("✔ Strong signal → Decreasing Tx Power\n")
-            ap1.setTxPower(max(tx - STEP, TX_MIN))
-
-        time.sleep(2)
-
-    CLI(net)
-    net.stop()
-
-if __name__ == '__main__':
-    setLogLevel('info')
-    topology()
+    out = parser.OFPPacketOut(datapath=datapath,
+                              buffer_id=msg.buffer_id,
+                              in_port=in_port,
+                              actions=actions,
+                              data=msg.data)
+    datapath.send_msg(out)
