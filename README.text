@@ -1,4 +1,91 @@
-mohaned@mohaned:~$ ryu-manager --ofp-tcp-listen-port 6654 ryu.app.simple_switch_13
-ryu-manager: command not found
-mohaned@mohaned:~$ 
+جرّب الأول:
+which ryu-manager
 
+
+لو ما طلعش أي شيء → كمل الخطوات.
+
+🔹 فعّل الـ virtual environment
+
+غالبًا اسمها ryu-env (واضح من محادثاتك السابقة):
+
+source ryu-env/bin/activate
+
+
+بعدها جرّب:
+
+ryu-manager --version
+
+
+لو اشتغل ✔️
+شغّل الأمر بتاعك:
+
+ryu-manager --ofp-tcp-listen-port 6654 ryu.app.simple_switch_13
+
+
+📌 مهم:
+لازم كل مرة تفتح Terminal جديد تعمل activate.
+
+✅ الاحتمال 2: Ryu متثبت لكن مش في PATH
+
+يعني موجود، لكن النظام مش شايفه.
+
+🔹 شغّل:
+python3 -m ryu.cmd.manager --ofp-tcp-listen-port 6654 ryu.app.simple_switch_13
+
+
+لو اشتغل كده ✔️
+يبقى Ryu سليم، بس الأمر المختصر مش متسجل.
+
+✅ الاحتمال 3: Ryu مش متثبت أصلًا
+
+نتأكد:
+
+pip3 show ryu
+
+
+لو قال:
+
+WARNING: Package(s) not found: ryu
+
+
+يبقى ثبته:
+
+pip3 install ryu
+
+
+أو (أفضل):
+
+sudo pip3 install ryu
+
+
+وبعدها:
+
+ryu-manager --version
+
+✅ الاحتمال 4: Ryu متثبت بـ pip --user
+
+في الحالة دي المسار بيكون هنا:
+
+~/.local/bin
+
+🔹 جرّب:
+~/.local/bin/ryu-manager --version
+
+
+لو اشتغل ✔️
+ضيفه للـ PATH:
+
+echo 'export PATH=$PATH:$HOME/.local/bin' >> ~/.bashrc
+source ~/.bashrc
+
+🔍 ملخص سريع
+الحالة	الحل
+Ryu داخل virtualenv	source ryu-env/bin/activate
+Ryu مش في PATH	python3 -m ryu.cmd.manager
+Ryu مش متثبت	pip3 install ryu
+Ryu user install	أضف ~/.local/bin
+❓ الخطوة الجاية
+
+ابعتلي ناتج الأمر ده:
+
+pip3 show ryu
