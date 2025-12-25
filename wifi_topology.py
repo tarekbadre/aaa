@@ -1,57 +1,44 @@
-from mn_wifi.net import Mininet_wifi
-from mn_wifi.node import OVSKernelAP
+#!/usr/bin/env python
+
+from mininet.log import setLogLevel, info
 from mn_wifi.cli import CLI
-from mn_wifi.link import wmediumd
-from mn_wifi.wmediumdConnector import interference
-from mininet.log import setLogLevel
+from mn_wifi.net import Mininet_wifi
 
 def topology():
-    net = Mininet_wifi(
-        controller=None,
-        accessPoint=OVSKernelAP,
-        link=wmediumd,
-        wmediumd_mode=interference
-    )
+    "Hatadan arindirilmis ve gorsellestirilmis mobilite kodu."
+    net = Mininet_wifi()
 
-    print("*** Creating nodes")
+    info("*** Dugumler Olusturuluyor\n")
+    # Ikon hatasi almamak icin standart istasyonlar
+    sta1 = net.addStation('sta1', mac='00:00:00:00:00:02', ip='10.0.0.2/8')
+    sta2 = net.addStation('sta2', mac='00:00:00:00:00:03', ip='10.0.0.3/8')
+   
+    # AP ve kapsama alani (range=50)
+    ap1 = net.addAccessPoint('ap1', ssid='new-ssid', mode='g', channel='1',
+                             position='100,100,0', range='50')
+   
+    c1 = net.addController('c1')
 
-    sta1 = net.addStation(
-        'sta1',
-        position='10,30,0'
-    )
+    info("*** Yapilandirma\n")
+    net.configureNodes()
 
-    ap1 = net.addAccessPoint(
-        'ap1',
-        ssid='Network_1',
-        channel='1',
-        position='20,30,0',
-        range=30
-    )
+    # Grafigi ac ve kapsama alanlarini goster
+    # showConnectivity yerine 'show_stations' ve 'show_isans' parametrelerini plotGraph icinde deneyelim
+    net.plotGraph(max_x=200, max_y=200)
 
-    ap2 = net.addAccessPoint(
-        'ap2',
-        ssid='Network_2',
-        channel='6',
-        position='70,30,0',
-        range=30
-    )
+    info("*** Surekli Hareket Modeli (Random Walk)\n")
+    net.setMobilityModel(time=0, model='RandomWalk',
+                         max_x=160, max_y=160, min_x=40, min_y=40)
 
-    print("*** Configuring wifi nodes")
-    net.configureWifiNodes()
+    info("*** Ag Baslatiliyor\n")
+    net.build()
+    c1.start()
+    ap1.start([c1])
 
-    print("*** Plotting graph")
-    net.plotGraph(max_x=100, max_y=100)
-
-    print("*** Starting network")
-    net.start()
-
-    print("*** Starting mobility")
-    net.startMobility(time=0)
-    net.mobility(sta1, 'start', time=1, position='10,30,0')
-    net.mobility(sta1, 'stop', time=20, position='90,30,0')
-    net.stopMobility(time=21)
-
+    info("*** CLI Hazir. Noktalar hareket ederken baglantiyi kontrol edebilirsiniz.\n")
     CLI(net)
+
+    info("*** Durduruluyor\n")
     net.stop()
 
 if __name__ == '__main__':
