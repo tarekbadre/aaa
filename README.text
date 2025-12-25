@@ -1,4 +1,40 @@
 mohaned@mohaned:~$ ls
+Desktop              mininet-wifi    proje_topoloji.py  Templates
+Documents            mohaned_sdn.py  Public             Videos
+Downloads            Music           __pycache__        wifi_sdn_project
+kontrolcu_beyni.py   myenv           ryu-env            wmediumd
+mac80211_hwsim_mgmt  openflow        sdn_project.py
+mininet              Pictures        snap
+mohaned@mohaned:~$ sudo python3 proje_topoloji.py
+[sudo] password for mohaned: 
+*** Dugumler Olusturuluyor
+*** Yapilandirma
+*** ap1-wlan1: minimum tx power (1 dBm) yields 50.00m for requested 50.00m (delta +0.00m)
+*** Surekli Hareket Modeli (Random Walk)
+*** Ag Baslatiliyor
+*** CLI Hazir. Noktalar hareket ederken baglantiyi kontrol edebilirsiniz.
+*** Starting CLI:
+mininet-wifi> exit
+*** Durduruluyor
+*** Stopping 1 controllers
+c1 
+*** Stopping 3 links
+...
+*** Stopping switches/access points
+ap1 
+*** Stopping nodes
+sta1 sta2 
+
+*** Removing WiFi module and Configurations
+*** Killing mac80211_hwsim
+
+*** Done
+mohaned@mohaned:~$ 
+
+---------------------------------------
+
+
+mohaned@mohaned:~$ ls
 Desktop                  mohaned_sdn.py     ryu-env
 Documents                Music              sdn_project.py
 Downloads                myenv              snap
